@@ -14,6 +14,8 @@ module.exports = {
         'yellow-100': '#FFF4EA',
         'purple-50': '#F5F4FF',
         'purple-500': '#EDEBFF',
+        'grey-50': ' #EFEFEF',
+        'grey-10': '#FCFCFC',
       },
       borderColor: {
         purple: '#4A46FF',
@@ -21,6 +23,7 @@ module.exports = {
         grey: '#D7D6FF',
       },
       textColor: {
+        'purple-pink': '#5954D4',
         purple: '#4A46FF',
         red: '#FF1717',
         grey: '#AAAAAA',
