@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.registrPhoneInput .PhoneInputInput {
+  border: 1px solid #d7d6ff;
+  background: linear-gradient(to left, #f5f5ff 73%, #d7d6ff 50%);
+  border-radius: 40px;
+  width: 100%;
+  height: 56px;
+  outline: none;
+  padding-left: 50px;
+}
+
+.registrPhoneInput .PhoneInputCountry {
+  width: 112px;
+  position: absolute;
+  height: 100%;
+  padding-left: 16px;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  padding-right: 10px;
+  @apply bg-light-purple;
+}
+.notSelect .PhoneInputCountry {
+  background-color: transparent;
+}
+.notSelect .PhoneInputInput {
+  @apply bg-perwinkle-purple;
+  background: linear-gradient(to left, #f5f5ff 73%, #f5f5ff 50%);
+}
+.registrPhoneInput .PhoneInputCountrySelectArrow {
+  display: none;
+}
