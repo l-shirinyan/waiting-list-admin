@@ -39,3 +39,10 @@ body {
 .registrPhoneInput .PhoneInputCountrySelectArrow {
   display: none;
 }
+
+.activeLink {
+  @apply text-purple;
+  .dot {
+    display: block;
+  }
+}
