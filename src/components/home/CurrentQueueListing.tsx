@@ -4,6 +4,7 @@ import { Fragment, useLayoutEffect, useRef, useState } from 'react'
 import { IPeople, people } from '../../utils/constants'
 import { ReactComponent as CheckIcon } from '../../assets/icons/check.svg'
 import { ReactComponent as Visibility } from '../../assets/icons/visibility.svg'
+import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg'
 
 const publishingOptions = [
   {
@@ -26,7 +27,7 @@ const CurrentQueueListing = () => {
   const [indeterminate, setIndeterminate] = useState<boolean>(false)
   const [selectedPeople, setSelectedPeople] = useState<IPeople[]>([])
   const [selected, setSelected] = useState(publishingOptions[0])
-  const [seated, setSeated] = useState<number>(1)
+  const [seated, setSeated] = useState<number[]>([1])
 
   useLayoutEffect(() => {
     const isIndeterminate = selectedPeople?.length > 0 && selectedPeople?.length < people.length
@@ -34,43 +35,56 @@ const CurrentQueueListing = () => {
     setIndeterminate(isIndeterminate)
   }, [selectedPeople])
 
-  function toggleAll() {
+  const toggleAll = () => {
     setSelectedPeople(checked || indeterminate ? [] : people)
     setChecked(!checked && !indeterminate)
     setIndeterminate(false)
   }
+
+  const handleSetSeated = (id: number) => {
+    setSeated((prev) => {
+      const item = [...prev]
+      if (item.includes(id)) {
+        return item.filter((el) => el !== id)
+      } else {
+        setSeated((prev) => [...prev, id])
+      }
+      return item
+    })
+  }
   return (
     <div className='pt-[46px] flex flex-col gap-8 pl-5 pr-5 xl:pl-[43px] xl:pr-[61px]'>
       <div className='flex justify-between'>
-        <h3 className='text-[32px] leading-10 font-semibold text-blue'>Current Queue</h3>
-        <button className='flex justify-center items-center bg-purple w-full max-w-[165px] h-10 rounded-[48px] text-base leading-4 font-semibold text-white'>
+        <h3 className='text-7 leading-10 font-semibold text-blue sm:text-[32px]'>Current Queue</h3>
+        <button className='flex justify-center items-center bg-purple w-full rounded-[48px] max-w-[128px] h-[30px] leading-4 font-semibold text-xs text-white sm:text-base sm:max-w-[165px] sm:h-10'>
           New Reservation
         </button>
       </div>
-      <div className='px-4 bg-grey-10 sm:px-6 lg:px-8'>
+      <div className='px-4 bg-grey-10 pt-4 sm:px-6 lg:px-8'>
         <div className='sm:flex sm:items-center'>
           <div className='sm:flex-auto'>
-            <span className='text-2xl font-semibold leading-8 text-grey-900'>
+            <span className='text-xl font-semibold leading-8 text-grey-900 sm:text-2xl'>
               Number of records
             </span>
             <button
               type='button'
-              className='inline-flex items-center ml-[13px] justify-center rounded-[6px] h-[32px] w-full max-w-[91px] bg-purple-500 text-purple text-sm font-medium shadow-sm'
+              className='inline-flex items-center justify-center rounded-[6px] h-[32px] w-full max-w-[91px] bg-purple-500 text-purple text-sm font-medium shadow-sm sm:ml-[13px]'
             >
               312 Records
             </button>
           </div>
           <div className='mt-4 sm:mt-0 sm:ml-16 sm:flex-none'></div>
         </div>
-        <div className='mt-3 flex justify-between items-center'>
-          <div>
+        <div className='mt-3 flex flex-col gap-5 justify-between md:items-center md:flex-row md:gap-0'>
+          <div className='relative w-full max-w-[407px]'>
             <input
               type='text'
               name='search'
               id='search'
-              className='block w-full px-3 max-w-[407px] h-10 rounded-full bg-purple-500 text-xs text-semibold placeholder:text-xs placeholder:font-semibold sm:text-sm'
+              className='block w-full px-3 h-10 rounded-full bg-purple-500 text-xs text-semibold border-[1px] border-grey placeholder:text-xs placeholder:font-semibold sm:text-sm'
               placeholder='search for reservation'
             />
+            <SearchIcon className='absolute right-3 top-[11px]' />
           </div>
           <div className='flex w-full gap-2 items-center justify-center max-w-[240px]'>
             <h3 className='text-blue text-[15px] font-semibold leading-6'>Sort by:</h3>
@@ -78,21 +92,43 @@ const CurrentQueueListing = () => {
               <span className='text-blue text-[15px] leading-6 font-semibold'>Oldest</span>
             </div>
             <div className='w-full max-w-[80px] h-10  flex justify-center items-center rounded-[48px]'>
-              <span className='text-purple-pink text-[15px] leading-6 font-semibold'>Oldest</span>
+              <span className='text-purple-pink text-[15px] leading-6 font-semibold'>Newest</span>
             </div>
           </div>
         </div>
-        <div className='mt-8 flex flex-col'>
-          <div className='h-[calc(100vh-200px)] -my-2 -mx-4 sm:-mx-6 lg:-mx-8 pb-[120px] overflow-y-auto'>
+        <div className='flex flex-col gap-[10px]'>
+          {selectedPeople.length ? (
+            <>
+              <h3 className='text-base font-semibold leading-5 mt-3'>
+                All {selectedPeople.length} recordes on this page are selected.
+              </h3>
+              <div className='flex gap-2'>
+                <div className='bg-purple w-[69px] h-9 flex justify-center items-center rounded-[64px]'>
+                  <span className='text-base font-semibold text-white'>Seated</span>
+                </div>
+                <div className='border-pink border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'>
+                  <span className='text-base font-semibold text-pink'>Canceled</span>
+                </div>
+                <div className='border-grey-100 border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'>
+                  <span className='text-base font-semibold text-grey-100'>No Show</span>
+                </div>
+              </div>
+            </>
+          ) : (
+            ''
+          )}
+        </div>
+        <div className={`flex flex-col ${selectedPeople ? 'mt-8' : ''}`}>
+          <div className='h-[calc(100vh-200px)] -my-2 -mx-4 sm:-mx-6 lg:-mx-8 overflow-y-auto'>
             <div className='inline-block min-w-full py-2 align-middle lg:px-8'>
               <div className='relative'>
-                <table className='min-w-full table-fixed divide-y divide-gray-300'>
+                <table className='min-w-full border-separate border-spacing-y-2 table-fixed'>
                   <thead>
                     <tr>
                       <th scope='col' className='relative w-12 px-6 sm:w-16 sm:px-8'>
                         <input
                           type='checkbox'
-                          className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] rounded bg-white ring-2 ring-[#5B5A87] sm:left-6'
+                          className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] border-0 rounded bg-white ring-2 text-dark-grey ring-[#5B5A87] focus:ring-[#1C1B1F] focus:rounded checked:bg-dark-grey focus:outline-none checked:ring-[#1C1B1F] focus:bg-dark-grey sm:left-6'
                           ref={checkbox}
                           checked={checked}
                           onChange={toggleAll}
@@ -144,13 +180,13 @@ const CurrentQueueListing = () => {
                           selectedPeople.includes(person) ? 'bg-gray-50' : undefined
                         }`}
                       >
-                        <td className='relative w-12 px-6 sm:w-16 sm:px-8'>
+                        <td className='relative w-12 px-6 rounded-l-[8px] border-l-[1px] border-y-[1px] border-grey sm:w-16 sm:px-8'>
                           {selectedPeople.includes(person) && (
                             <div className='absolute inset-y-0 left-0 w-0.5 bg-indigo-600' />
                           )}
                           <input
                             type='checkbox'
-                            className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] rounded bg-white ring-2 ring-[#05007A] sm:left-6'
+                            className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] rounded bg-white text-blue ring-2 ring-[#05007A] focus:ring-[#05007A] focus:rounded checked:bg-blue focus:outline-none focus:bg-blue sm:left-6'
                             value={person.guestName}
                             checked={selectedPeople.includes(person)}
                             onChange={(e) =>
@@ -163,24 +199,24 @@ const CurrentQueueListing = () => {
                           />
                         </td>
                         <td
-                          className={`whitespace-nowrap py-4 pr-3 text-sm font-semibold leading-4 ${
+                          className={`whitespace-nowrap border-y-[1px] border-grey py-4 pr-3 text-sm font-semibold leading-4 ${
                             selectedPeople.includes(person) ? 'text-indigo-600' : 'text-blue'
                           }`}
                         >
                           {person.guestName}
                         </td>
-                        <td className='whitespace-nowrap px-3 py-4 text-sm text-blue font-semibold leading-4'>
+                        <td className='whitespace-nowrap border-y-[1px] border-grey px-3 py-4 text-sm text-blue font-semibold leading-4'>
                           <div className='bg-yellow-100 w-10 h-7 rounded-[34px] flex justify-center items-center'>
                             {person.queueNumber}
                           </div>
                         </td>
-                        <td className='whitespace-nowrap px-3 py-4 text-sm text-blue font-semibold leading-4'>
+                        <td className='whitespace-nowrap border-y-[1px] border-grey px-3 py-4 text-sm text-blue font-semibold leading-4'>
                           {person.phoneNamber}
                         </td>
-                        <td className='whitespace-nowrap px-3 py-4 text-sm text-blue font-semibold leading-4'>
+                        <td className='whitespace-nowrap border-y-[1px] border-grey px-3 py-4 text-sm text-blue font-semibold leading-4'>
                           {person.guests}
                         </td>
-                        <td className='whitespace-nowrap px-3 py-4 text-sm text-blue font-semibold leading-4'>
+                        <td className='whitespace-nowrap border-y-[1px] border-grey px-3 py-4 text-sm text-blue font-semibold leading-4'>
                           <Listbox value={selected} onChange={setSelected}>
                             {({ open }) => (
                               <>
@@ -254,16 +290,16 @@ const CurrentQueueListing = () => {
                             )}
                           </Listbox>
                         </td>
-                        <td className='whitespace-nowrap px-3 py-4 text-sm text-blue font-semibold leading-4 flex gap-2'>
+                        <td className='whitespace-nowrap border-y-[1px] border-grey border-r-[1px] rounded-r-[8px] px-3 pt-4 pb-[22px] text-sm text-blue font-semibold leading-4 flex gap-2'>
                           <div
-                            onClick={() => setSeated(person.id)}
+                            onClick={() => handleSetSeated(person.id)}
                             className={`${
-                              seated === person.id ? 'bg-purple ' : 'border-2 border-purple'
+                              seated.includes(person.id) ? 'bg-purple ' : 'border-2 border-purple'
                             } w-[58px] h-8 flex justify-center items-center rounded-[64px]`}
                           >
                             <span
                               className={`text-xs font-semibold ${
-                                seated === person.id ? 'text-white' : 'text-purple'
+                                seated.includes(person.id) ? 'text-white' : 'text-purple'
                               }`}
                             >
                               {person.avtive}

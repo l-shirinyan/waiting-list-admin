@@ -15,12 +15,17 @@ module.exports = {
         'purple-50': '#F5F4FF',
         'purple-500': '#EDEBFF',
         'grey-50': ' #EFEFEF',
+        blue: '#05007A',
         'grey-10': '#FCFCFC',
+        'dark-grey': '#1C1B1F',
+        pink: '#FC0A70',
       },
       borderColor: {
         purple: '#4A46FF',
         'light-grey': '#DEDEDE',
         grey: '#D7D6FF',
+        pink: '#FC0A70',
+        'grey-100':'#5B5A87'
       },
       textColor: {
         'purple-pink': '#5954D4',
@@ -34,8 +39,11 @@ module.exports = {
         'purple-300': '#02007A',
         'purple-blue': '#42416D',
         'grey-900': '#1A1D1F',
+        'dark-grey': '#1C1B1F',
+        pink: '#FC0A70',
+        'grey-100':'#5B5A87'
       },
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 }
