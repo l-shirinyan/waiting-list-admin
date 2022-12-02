@@ -9,6 +9,30 @@ interface ISideBarLinks {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>
   title: string
 }
+export interface IPeople {
+  guestName: string
+  queueNumber: string
+  phoneNamber: string
+  guests: string
+  bookingStatus: string
+  avtive: string
+  id: number
+}
+
+interface IHistories {
+  title: string
+  num: number
+}
+
+interface IReservations {
+  reservationNumber: string
+  guestName: string
+  phoneNamber: string
+  queueNumber: string
+  guests: string
+  bookingStatus: string
+  id: number
+}
 
 export const sideBarLinks: ISideBarLinks[] = [
   {
@@ -32,16 +56,6 @@ export const sideBarLinks: ISideBarLinks[] = [
     title: 'QR Code',
   },
 ]
-
-export interface IPeople {
-  guestName: string
-  queueNumber: string
-  phoneNamber: string
-  guests: string
-  bookingStatus: string
-  avtive: string
-  id: number
-}
 
 export const people: IPeople[] = [
   {
@@ -97,5 +111,81 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 5,
+  },
+]
+
+export const histories: IHistories[] = [
+  {
+    title: 'Booked Reservations',
+    num: 7632,
+  },
+  {
+    title: 'Seated Reservations',
+    num: 7632,
+  },
+  {
+    title: 'Canceled Reservations',
+    num: 7632,
+  },
+  {
+    title: 'No Show Reservations',
+    num: 7632,
+  },
+]
+
+export const reservations: IReservations[] = [
+  {
+    reservationNumber: '87465574',
+    guestName: 'Ahmed Goudaa Moham..',
+    phoneNamber: '+2 010 765 599 98',
+    queueNumber: '13th',
+    guests: '4 Guest',
+    bookingStatus: 'Cancelled',
+    id: 2,
+  },
+  {
+    reservationNumber: '87465574',
+    guestName: 'Ahmed Goudaa Moham..',
+    phoneNamber: '+2 010 765 599 98',
+    queueNumber: '13th',
+    guests: '4 Guest',
+    bookingStatus: 'No Show',
+    id: 1,
+  },
+  {
+    reservationNumber: '87465574',
+    guestName: 'Ahmed Goudaa Moham..',
+    phoneNamber: '+2 010 765 599 98',
+    queueNumber: '13th',
+    guests: '4 Guest',
+    bookingStatus: 'Seated',
+    id: 5,
+  },
+  {
+    reservationNumber: '87465574',
+    guestName: 'Ahmed Goudaa Moham..',
+    phoneNamber: '+2 010 765 599 98',
+    queueNumber: '13th',
+    guests: '4 Guest',
+    bookingStatus: 'Seated',
+    id: 7,
+  },
+  {
+    reservationNumber: '87465574',
+    guestName: 'Ahmed Goudaa Moham..',
+    phoneNamber: '+2 010 765 599 98',
+    queueNumber: '13th',
+    guests: '4 Guest',
+    bookingStatus: 'No Show',
+    id: 8,
+  },
+  {
+    reservationNumber: '87465574',
+    guestName: 'Ahmed Goudaa Moham..',
+    phoneNamber: '+2 010 765 599 98',
+    queueNumber: '13th',
+    guests: '4 Guest',
+    bookingStatus: 'Cancelled',
+    id: 6,
   },
 ]

@@ -3,6 +3,7 @@ import LoginLayout from '../layouts/LoginLayout'
 import { MainLayout } from '../layouts/MainLayout'
 import { Login } from '../pages/auth/Login'
 import { Registration } from '../pages/auth/Registration'
+import { DataHistory } from '../pages/data-history/DataHistory'
 import { CurrentQueue } from '../pages/home/CurrentQueue'
 
 const RootRouter = () => {
@@ -14,6 +15,10 @@ const RootRouter = () => {
         {
           path: '/',
           element: <CurrentQueue />,
+        },
+        {
+          path: 'history',
+          element: <DataHistory />,
         },
       ],
     },

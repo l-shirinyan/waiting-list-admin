@@ -19,13 +19,15 @@ module.exports = {
         'grey-10': '#FCFCFC',
         'dark-grey': '#1C1B1F',
         pink: '#FC0A70',
+        green: '#10B981',
+        'grey-150': '#5B5A87',
       },
       borderColor: {
         purple: '#4A46FF',
         'light-grey': '#DEDEDE',
         grey: '#D7D6FF',
         pink: '#FC0A70',
-        'grey-100':'#5B5A87'
+        'grey-100': '#5B5A87',
       },
       textColor: {
         'purple-pink': '#5954D4',
@@ -34,6 +36,7 @@ module.exports = {
         grey: '#AAAAAA',
         'grey-500': '#2F2F2F',
         'grey-200': '#5B5A87',
+        'grey-300': '#6F767E',
         blue: '#05007A',
         'light-purple': '#5B5A87',
         'purple-300': '#02007A',
@@ -41,7 +44,7 @@ module.exports = {
         'grey-900': '#1A1D1F',
         'dark-grey': '#1C1B1F',
         pink: '#FC0A70',
-        'grey-100':'#5B5A87'
+        'grey-100': '#5B5A87',
       },
     },
   },
