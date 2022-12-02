@@ -118,7 +118,7 @@ const CurrentQueueListing = () => {
             ''
           )}
         </div>
-        <div className={`flex flex-col ${selectedPeople ? 'mt-8' : ''}`}>
+        <div className={`flex flex-col ${selectedPeople ? '' : 'mt-8'}`}>
           <div className='h-[calc(100vh-200px)] -my-2 -mx-4 sm:-mx-6 lg:-mx-8 overflow-y-auto'>
             <div className='inline-block min-w-full py-2 align-middle lg:px-8'>
               <div className='relative'>
