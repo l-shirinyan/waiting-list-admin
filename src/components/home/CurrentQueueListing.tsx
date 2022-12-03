@@ -128,7 +128,7 @@ const CurrentQueueListing = () => {
                       <th scope='col' className='relative w-12 px-6 sm:w-16 sm:px-8'>
                         <input
                           type='checkbox'
-                          className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] border-0 rounded bg-white ring-2 text-dark-grey ring-[#5B5A87] focus:ring-[#1C1B1F] focus:rounded checked:bg-dark-grey focus:outline-none checked:ring-[#1C1B1F] focus:bg-dark-grey sm:left-6'
+                          className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] border-0 rounded bg-white ring-2 text-dark-grey ring-[#5B5A87] focus:ring-transparent focus:rounded focus:outline-[#5B5A87] checked:ring-[#1C1B1F] checked:bg-dark-grey sm:left-6'
                           ref={checkbox}
                           checked={checked}
                           onChange={toggleAll}
@@ -136,7 +136,7 @@ const CurrentQueueListing = () => {
                       </th>
                       <th
                         scope='col'
-                        className='min-w-[12rem] py-3.5 text-left text-light-purple text-[13px] leading-[14px] font-semibold'
+                        className='py-3.5 text-left text-light-purple text-[13px] leading-[14px] font-semibold'
                       >
                         Guest Name
                       </th>
@@ -186,7 +186,7 @@ const CurrentQueueListing = () => {
                           )}
                           <input
                             type='checkbox'
-                            className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] rounded bg-white text-blue ring-2 ring-[#05007A] focus:ring-[#05007A] focus:rounded checked:bg-blue focus:outline-none focus:bg-blue sm:left-6'
+                            className='absolute left-4 top-1/2 -mt-2 h-[15px] w-[15px] border-0 rounded bg-white ring-2 text-blue ring-[#05007A] focus:ring-transparent focus:rounde focus:outline-[#05007A] checked:bg-blue checked:ring-[#05007A] sm:left-6'
                             value={person.guestName}
                             checked={selectedPeople.includes(person)}
                             onChange={(e) =>
