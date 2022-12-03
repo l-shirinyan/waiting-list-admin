@@ -49,7 +49,7 @@ const HistoryListing = () => {
               </div>
             </div>
           </div>
-          <div className='flex flex-col h-[calc(100vh-200px)] w-full overflow-y-auto'>
+          <div className='flex flex-col w-full overflow-y-auto'>
             <div className='inline-block min-w-full py-2 align-middle pr-4'>
               <div className='relative'>
                 <table className='min-w-full border-separate border-spacing-y-2 table-fixed'>
@@ -57,7 +57,7 @@ const HistoryListing = () => {
                     <tr>
                       <th
                         scope='col'
-                        className='whitespace-nowrap min-w-[12rem] py-3.5 text-left text-light-purple text-[13px] leading-[14px] font-semibold'
+                        className='whitespace-nowrap py-3.5 text-left text-light-purple text-[13px] leading-[14px] font-semibold'
                       >
                         Reservation #
                       </th>
