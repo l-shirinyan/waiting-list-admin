@@ -180,7 +180,7 @@ const CurrentQueueListing = () => {
                           selectedPeople.includes(person) ? 'bg-gray-50' : undefined
                         }`}
                       >
-                        <td className='relative w-12 px-6 rounded-l-[8px] border-l-[1px] border-y-[1px] border-grey sm:w-16 sm:px-8'>
+                        <td className='relative w-12 px-6 rounded-l- border-l-[1px] border-y-[1px] border-grey sm:w-16 sm:px-8'>
                           {selectedPeople.includes(person) && (
                             <div className='absolute inset-y-0 left-0 w-0.5 bg-indigo-600' />
                           )}
