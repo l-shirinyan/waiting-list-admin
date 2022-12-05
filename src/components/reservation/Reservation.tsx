@@ -7,9 +7,7 @@ const Reservation = () => {
   return (
     <div className='pt-[55px] flex flex-col gap-6 pl-5 pr-5 xl:pl-[43px] xl:pr-[61px]'>
       <div className='flex justify-between'>
-        <h3 className='leading-10 font-semibold text-blue text-[32px]'>
-          Reservation settings
-        </h3>
+        <h3 className='leading-10 font-semibold text-blue text-[32px]'>Reservation settings</h3>
       </div>
       <div className='w-full h-full bg-white p-6 rounded-xl'>
         <div className='flex flex-col gap-4'>
@@ -103,6 +101,11 @@ const Reservation = () => {
         <div className='flex justify-center items-center rounded-[50%] h-[115px] w-[115px] bg-grey-150 self-center'>
           <BackUpIcon />
         </div>
+      </div>
+      <div className='flex w-full justify-end'>
+        <button className='bg-purple w-[217px] h-[56px] text-4 leading-4 font-semibold text-white rounded-[48px]'>
+          Save Changes
+        </button>
       </div>
     </div>
   )
