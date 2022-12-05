@@ -30,6 +30,9 @@ module.exports = {
         'light-blue': '#E0DFFE',
         'grey-50': '#EFEFEF',
         'grey-200': '#DFDEDE',
+        'grey-300': '#E2E2E2',
+        'grey-400': '#E0E0E0',
+        'grey-500':'#DCDCDC'
       },
       textColor: {
         'purple-pink': '#5954D4',
