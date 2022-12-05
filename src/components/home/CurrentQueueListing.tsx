@@ -110,7 +110,7 @@ const CurrentQueueListing = () => {
                   <span className='text-base font-semibold text-pink'>Canceled</span>
                 </div>
                 <div className='border-grey-100 border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'>
-                  <span className='text-base font-semibold text-grey-100'>No Show</span>
+                  <span className='text-base font-semibold text-light-purple'>No Show</span>
                 </div>
               </div>
             </>

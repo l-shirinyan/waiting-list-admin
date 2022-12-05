@@ -16,7 +16,7 @@ const SideBarLinks = () => {
           <Down />
         </div>
       </div>
-      <nav className='mt-14 flex flex-col gap-8 pr-1'>
+      <nav className='mt-12 flex flex-col gap-8 pr-1'>
         {sideBarLinks.map(({ Icon, ...item }) => {
           const clone = { ...item }
           if (clone.link) {

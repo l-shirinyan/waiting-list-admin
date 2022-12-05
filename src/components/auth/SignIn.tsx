@@ -14,7 +14,7 @@ const SignIn = () => {
     <div className='flex items-center flex-col w-full max-w-[528px] gap-8'>
       <form className='w-full bg-white p-8 flex flex-col gap-6'>
         <div className='flex flex-col gap-3'>
-          <span className='text-base font-semibold text-grey-200'>Your e-mail</span>
+          <span className='text-base font-semibold text-light-purple'>Your e-mail</span>
           <input
             type='email'
             autoComplete='email'
@@ -22,7 +22,7 @@ const SignIn = () => {
           />
         </div>
         <div className='flex flex-col gap-3'>
-          <span className='text-base font-semibold text-grey-200'>Password</span>
+          <span className='text-base font-semibold text-light-purple'>Password</span>
           <div className='w-full relative'>
             <input
               type={passwordShown ? 'text' : 'password'}
@@ -41,7 +41,7 @@ const SignIn = () => {
         <Link to='#' className='text-base leading-6 text-purple text-center'>
           Forgot password?
         </Link>
-        <span className='text-base leading-6 text-grey-200'>
+        <span className='text-base leading-6 text-light-purple'>
           {`Don't have an account? `}
           <Link to='#' className='text-base leading-6 text-purple text-center'>
             Sign Up
