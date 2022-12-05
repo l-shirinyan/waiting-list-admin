@@ -20,6 +20,7 @@ module.exports = {
         'dark-grey': '#1C1B1F',
         pink: '#FC0A70',
         'grey-150': '#EEEEEE',
+        'light-green': '#E0F6F4',
       },
       borderColor: {
         purple: '#4A46FF',
@@ -32,7 +33,8 @@ module.exports = {
         'grey-200': '#DFDEDE',
         'grey-300': '#E2E2E2',
         'grey-400': '#E0E0E0',
-        'grey-500':'#DCDCDC'
+        'grey-500': '#DCDCDC',
+        'perwinkle-purple': '#F5F5FF',
       },
       textColor: {
         'purple-pink': '#5954D4',
@@ -49,6 +51,8 @@ module.exports = {
         'dark-grey': '#1C1B1F',
         pink: '#FC0A70',
         'light-grey': '#6F767E',
+        'purple-100': '#9A99CA',
+        'purple-50': '#BDBDCF',
       },
     },
   },

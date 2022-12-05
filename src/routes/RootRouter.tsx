@@ -5,6 +5,7 @@ import { Login } from '../pages/auth/Login'
 import { Registration } from '../pages/auth/Registration'
 import { DataHistory } from '../pages/data-history/DataHistory'
 import { CurrentQueue } from '../pages/home/CurrentQueue'
+import { QrCode } from '../pages/qr-code/QrCode'
 import { Settings } from '../pages/settings/Settings'
 
 const RootRouter = () => {
@@ -24,6 +25,10 @@ const RootRouter = () => {
         {
           path: '/settings',
           element: <Settings />,
+        },
+        {
+          path: 'qr-code',
+          element: <QrCode />,
         },
       ],
     },
