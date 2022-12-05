@@ -5,6 +5,7 @@ import { Login } from '../pages/auth/Login'
 import { Registration } from '../pages/auth/Registration'
 import { DataHistory } from '../pages/data-history/DataHistory'
 import { CurrentQueue } from '../pages/home/CurrentQueue'
+import { Settings } from '../pages/settings/Settings'
 
 const RootRouter = () => {
   const routes = createBrowserRouter([
@@ -19,6 +20,10 @@ const RootRouter = () => {
         {
           path: 'history',
           element: <DataHistory />,
+        },
+        {
+          path: '/settings',
+          element: <Settings />,
         },
       ],
     },

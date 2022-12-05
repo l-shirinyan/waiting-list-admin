@@ -16,8 +16,8 @@ const SideBarViewProfile = () => {
             </div>
             <div className='flex gap-3 items-center'>
               <div>
-                <p className='text-base text-grey-200 leading-4 font-semibold'>Queen Sheb...</p>
-                <p className='text-base text-grey-200 leading-4 mt-2'>Queen@gmail.com</p>
+                <p className='text-base text-light-purple leading-4 font-semibold'>Queen Sheb...</p>
+                <p className='text-base text-light-purple leading-4 mt-2'>Queen@gmail.com</p>
               </div>
               <LogoutIcon />
             </div>

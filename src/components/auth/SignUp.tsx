@@ -35,7 +35,7 @@ const SignUp = () => {
         <div className="flex flex-col gap-3">
           <label
             htmlFor="restaurent_name"
-            className="text-base font-semibold text-grey-200"
+            className="text-base font-semibold text-light-purple"
           >
             Restaurent Name
           </label>
@@ -50,7 +50,7 @@ const SignUp = () => {
         <div className="flex flex-col gap-3">
           <label
             htmlFor="email"
-            className="text-base font-semibold text-grey-200"
+            className="text-base font-semibold text-light-purple"
           >
             Your e-mail
           </label>
@@ -65,7 +65,7 @@ const SignUp = () => {
         <div className="flex flex-col gap-3">
           <label
             htmlFor="password"
-            className="text-base font-semibold text-grey-200"
+            className="text-base font-semibold text-light-purple"
           >
             Password
           </label>
@@ -85,7 +85,7 @@ const SignUp = () => {
           <div>
             <label
               htmlFor="phone-number"
-              className="text-base font-semibold text-grey-200"
+              className="text-base font-semibold text-light-purple"
             >
               Mobile number
             </label>
@@ -109,7 +109,7 @@ const SignUp = () => {
                 </div>
               )}
             </div>
-            <span className="text-xs leading-4 text-grey-200">Optional</span>
+            <span className="text-xs leading-4 text-light-purple">Optional</span>
           </div>
         </div>
         <button className="w-full h-[56px] bg-purple rounded-[48px] text-white text-base font-semibold">
@@ -117,7 +117,7 @@ const SignUp = () => {
         </button>
       </form>
       <div className="flex flex-col gap-4 justify-center">
-        <span className="text-base leading-6 text-grey-200">
+        <span className="text-base leading-6 text-light-purple">
           Already have an account?{" "}
           <Link to="#" className="text-base leading-6 text-purple text-center">
             Sign In
