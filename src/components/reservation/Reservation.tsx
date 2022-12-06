@@ -2,8 +2,11 @@ import { Toggle } from './Toggle'
 import { ReactComponent as PlusIcon } from '../../assets/icons/add.svg'
 import { ReactComponent as EditIcon } from '../../assets/icons/edit.svg'
 import { ReactComponent as BackUpIcon } from '../../assets/icons/backup.svg'
+import { ReactComponent as SitIcon } from '../../assets/icons/airline_seat_recline_normal.svg'
+import { useState } from 'react'
 
 const Reservation = () => {
+  const [addNewArea, setAddNewArea] = useState<boolean>(false)
   return (
     <div className='pt-[55px] flex flex-col gap-6 pl-5 pr-5 xl:pl-[43px] xl:pr-[61px]'>
       <div className='flex justify-between'>
@@ -18,7 +21,7 @@ const Reservation = () => {
             <span className='text-xl font-semibold leading-6 text-purple-300'>
               Waiting List Avialability
             </span>
-            <div className='flex justify-between max-w-[520px] gap-[92px] items-end'>
+            <div className='flex justify-between max-w-[508px] gap-[92px] items-end'>
               <span className='text-light-purple text-base leading-5 font-semibold max-w-[375px]'>
                 Set restaurant availability if your restaurant is busy
               </span>
@@ -29,13 +32,36 @@ const Reservation = () => {
             <span className='text-xl font-semibold leading-6 text-purple-300'>
               Seating View Area
             </span>
-            <div className='flex justify-between flex-col gap-3 max-w-[640px] lg:items-end lg:flex-row lg:gap-0'>
+            <div className={`${addNewArea?'max-w-[1030px] ':'max-w-[637px]'} flex justify-between flex-col gap-3 lg:items-end lg:flex-row lg:gap-0`}>
               <span className='text-light-purple text-base leading-5 font-semibold max-w-[400px]'>
                 Manage available areas, that could be selected by guests
               </span>
-              <div className='flex items-center gap-[13px]'>
-                <PlusIcon />
-                <span className='text-xl leading-5 font-semibold text-purple'>Add New Area</span>
+              <div className='flex gap-2'>
+                {addNewArea && (
+                  <>
+                    <div className='w-[175px] h-[68px] bg-light-grey border-[1px] border-grey-300 rounded-lg gap-3 flex justify-center items-center'>
+                      <span className='text-base leading-5 font-semibold text-purple'>
+                        Indoor View{' '}
+                      </span>
+                      <Toggle />
+                    </div>
+                    <div className='w-[188px] h-[68px] flex justify-center items-center border-grey-400 border-[1px] rounded-lg gap-[10px]'>
+                      <SitIcon />
+                      <input
+                        type='text'
+                        className='w-[146px] h-9 placeholder:text-[#9292A6] placeholder:text-[13px] placeholder:font-semibold border-[1px] border-grey-500 rounded-lg'
+                        placeholder='type a view name'
+                      />
+                    </div>
+                  </>
+                )}
+                <div
+                  className='flex items-center gap-[13px] ml-4'
+                  onClick={() => setAddNewArea(true)}
+                >
+                  <PlusIcon />
+                  <span className='text-xl leading-5 font-semibold text-purple'>Add New Area</span>
+                </div>
               </div>
             </div>
           </div>

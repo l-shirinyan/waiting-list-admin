@@ -51,11 +51,17 @@ export const sideBarLinks: ISideBarLinks[] = [
     title: 'Settings',
   },
   {
-    link: 'qr-ode',
+    link: 'qr-code',
     Icon: QrCodeIcon,
     title: 'QR Code',
   },
 ]
+
+interface IQrCode {
+  title: string
+  text: string
+  id: number
+}
 
 export const people: IPeople[] = [
   {
@@ -187,5 +193,23 @@ export const reservations: IReservations[] = [
     guests: '4 Guest',
     bookingStatus: 'Cancelled',
     id: 6,
+  },
+]
+
+export const qrcode: IQrCode[] = [
+  {
+    id: 1,
+    title: 'Basic QR Code',
+    text: '.svg file type of your QR',
+  },
+  {
+    id: 2,
+    title: 'Sticker',
+    text: '7x7cm sticker with customizable colours',
+  },
+  {
+    id: 3,
+    title: 'Table tent',
+    text: '8x12cm foldable stand with customizable colours',
   },
 ]
