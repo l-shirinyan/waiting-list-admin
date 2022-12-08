@@ -7,7 +7,7 @@ export default defineConfig({
   plugins: [ svgr({}),react()],
   define: {
     'process.env': {
-      REACT_APP_BASE_URL: "https://qrcode-api.gaytomycode.com/v1"
+      REACT_APP_BASE_URL: "https://yqrc-identity-api.gaytomycode.com/v1"
     }
   }
 })

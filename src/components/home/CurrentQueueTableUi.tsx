@@ -1,6 +1,6 @@
-import { lazy, useLayoutEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { IPeople, people } from '../../utils/constants'
-const CurrentQueueTbody = lazy(() => import('./CurrentQueueTbody'))
+import CurrentQueueTbody from './CurrentQueueTbody'
 
 interface CurrentQueueTableUiProps {
   selectedPeople: IPeople[]
