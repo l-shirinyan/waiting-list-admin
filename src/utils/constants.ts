@@ -17,6 +17,7 @@ export interface IPeople {
   bookingStatus: string
   avtive: string
   id: number
+  reservation_number:string
 }
 
 interface IHistories {
@@ -32,6 +33,17 @@ interface IReservations {
   guests: string
   bookingStatus: string
   id: number
+}
+
+interface IQrCode {
+  title: string
+  text: string
+  id: number
+}
+
+interface IPublishingOptions {
+  title: string
+  current: boolean
 }
 
 export const sideBarLinks: ISideBarLinks[] = [
@@ -57,12 +69,6 @@ export const sideBarLinks: ISideBarLinks[] = [
   },
 ]
 
-interface IQrCode {
-  title: string
-  text: string
-  id: number
-}
-
 export const people: IPeople[] = [
   {
     guestName: 'Ahmed Goudaa Moham..',
@@ -72,6 +78,7 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 1,
+    reservation_number: '#98575665',
   },
   {
     guestName: 'Ahmed Goudaa Moham..',
@@ -81,6 +88,7 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 10,
+    reservation_number: '#98575665',
   },
   {
     guestName: 'Ahmed Goudaa Moham..',
@@ -90,6 +98,7 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 2,
+    reservation_number: '#98575665',
   },
   {
     guestName: 'Ahmed Goudaa Moham..',
@@ -99,6 +108,7 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 3,
+    reservation_number: '#98575665',
   },
   {
     guestName: 'Ahmed Goudaa Moham..',
@@ -108,6 +118,7 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 4,
+    reservation_number: '#98575665',
   },
   {
     guestName: 'Ahmed Goudaa Moham..',
@@ -117,6 +128,7 @@ export const people: IPeople[] = [
     bookingStatus: 'Booked',
     avtive: 'Seated',
     id: 5,
+    reservation_number: '#98575665',
   },
 ]
 
@@ -211,5 +223,20 @@ export const qrcode: IQrCode[] = [
     id: 3,
     title: 'Table tent',
     text: '8x12cm foldable stand with customizable colours',
+  },
+]
+
+export const publishingOptions: IPublishingOptions[] = [
+  {
+    title: 'Booked',
+    current: true,
+  },
+  {
+    title: 'Draft',
+    current: false,
+  },
+  {
+    title: 'Canceled',
+    current: false,
   },
 ]
