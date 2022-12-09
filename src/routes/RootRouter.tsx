@@ -19,7 +19,7 @@ const RootRouter = () => {
           element: <CurrentQueue />,
         },
         {
-          path: 'history',
+          path: '/history',
           element: <DataHistory />,
         },
         {
@@ -27,7 +27,7 @@ const RootRouter = () => {
           element: <Settings />,
         },
         {
-          path: 'qr-code',
+          path: '/qr-code',
           element: <QrCode />,
         },
       ],
