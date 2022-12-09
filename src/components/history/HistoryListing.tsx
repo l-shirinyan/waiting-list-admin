@@ -1,4 +1,5 @@
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg'
+import { Historytable } from './Historytable'
 import { Pagination } from './Pagination'
 
 const HistoryListing = () => {
@@ -43,7 +44,9 @@ const HistoryListing = () => {
           </div>
           <div className='flex flex-col w-full overflow-y-auto'>
             <div className='inline-block min-w-full py-2 align-middle pr-4'>
-              <div className='relative'></div>
+              <div className='relative'>
+                <Historytable />
+              </div>
             </div>
             <Pagination />
           </div>
