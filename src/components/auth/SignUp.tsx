@@ -111,7 +111,7 @@ const SignUp = () => {
           <div className='flex flex-col gap-4 justify-center'>
             <span className='text-base leading-6 text-light-purple'>
               Already have an account?{' '}
-              <Link to='#' className='text-base leading-6 text-purple text-center'>
+              <Link to='/login' className='text-base leading-6 text-purple text-center'>
                 Sign In
               </Link>
             </span>

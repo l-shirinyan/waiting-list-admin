@@ -85,7 +85,7 @@ const SignIn = () => {
             </Link>
             <span className='text-base leading-6 text-light-purple'>
               {`Don't have an account? `}
-              <Link to='#' className='text-base leading-6 text-purple text-center'>
+              <Link to='/registration' className='text-base leading-6 text-purple text-center'>
                 Sign Up
               </Link>
             </span>
