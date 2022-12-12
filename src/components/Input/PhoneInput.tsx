@@ -3,9 +3,12 @@ import { ReactComponent as PhoneIcon } from '../../assets/icons/arrow-phone.svg'
 import PhoneInput from 'react-phone-number-input'
 import 'react-phone-number-input/style.css'
 
-const TelInput = () => {
+interface ITelInput {
+  inputValue: string
+  setInputValue: (inputValue: string) => void
+}
+const TelInput = ({ inputValue, setInputValue }: ITelInput) => {
   const [value, setValue] = useState('+966')
-  const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
     const inp = document.querySelector('.PhoneInputInput')
@@ -31,9 +34,11 @@ const TelInput = () => {
         onChange={(phone: string) => {
           setValue(phone)
         }}
-        className={`registrPhoneInput ${inputValue.split(' ').length > 1 ? 'notSelect' : ''} text-base leading-4 font-semibold text-purple-300`}
+        className={`registrPhoneInput ${
+          inputValue?.split(' ').length > 1 ? 'notSelect' : ''
+        } text-base leading-4 font-semibold text-purple-300`}
       />
-      {inputValue.split(' ').length === 1 && (
+      {inputValue?.split(' ').length === 1 && (
         <div className='absolute flex gap-[10px] items-center top-5 left-[50px] z-50'>
           <span className='text-purple-300 text-[14px] leading-4'>{value || inputValue}</span>
           <PhoneIcon />

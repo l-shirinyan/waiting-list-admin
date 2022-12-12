@@ -1,8 +1,10 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './auth/authSlice'
+import queueReducer from './queue/queueSlice'
 export const store = configureStore({
   reducer: {
     isAuth: authReducer,
+    queueData: queueReducer,
   },
 })
 

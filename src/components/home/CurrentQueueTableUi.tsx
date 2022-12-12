@@ -1,10 +1,11 @@
 import { useLayoutEffect, useRef, useState } from 'react'
-import { IPeople, people } from '../../utils/constants'
+import { useAppSelector } from '../../hooks/redux'
+import { IData } from '../../redux/queue/model'
 import CurrentQueueTbody from './CurrentQueueTbody'
 
 interface CurrentQueueTableUiProps {
-  selectedPeople: IPeople[]
-  setSelectedPeople: (selectedPeople: IPeople[]) => void
+  selectedPeople: IData[] | null
+  setSelectedPeople: (selectedPeople: IData[] | null) => void
   setOpen: (open: boolean) => void
   setDetail: (detail: number) => void
 }
@@ -19,15 +20,18 @@ const CurrentQueueTableUi = ({
   const [checked, setChecked] = useState(false)
   const [indeterminate, setIndeterminate] = useState<boolean>(false)
   const [seated, setSeated] = useState<number[]>([1])
-
+  const { queueData } = useAppSelector((state) => state.queueData)
   useLayoutEffect(() => {
-    const isIndeterminate = selectedPeople?.length > 0 && selectedPeople?.length < people.length
-    setChecked(selectedPeople.length === people.length)
-    setIndeterminate(isIndeterminate)
+    if (queueData && selectedPeople) {
+      const isIndeterminate =
+        selectedPeople?.length > 0 && selectedPeople?.length < queueData?.length
+      setChecked(selectedPeople.length === queueData?.length)
+      setIndeterminate(isIndeterminate)
+    }
   }, [selectedPeople])
 
   const toggleAll = () => {
-    setSelectedPeople(checked || indeterminate ? [] : people)
+    setSelectedPeople(checked || indeterminate ? [] : queueData ? queueData : null)
     setChecked(!checked && !indeterminate)
     setIndeterminate(false)
   }

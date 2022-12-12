@@ -1,12 +1,12 @@
 import { useState } from 'react'
-import { IPeople } from '../../utils/constants'
+import { IData } from '../../redux/queue/model'
 import { ReservationDialog } from '../reservation-func/ReservationDialog'
 import { ViewReservation } from '../reservation-func/ViewReservation'
 import { CurrentQueueTableUi } from './CurrentQueueTableUi'
 
 interface ICurrentQueueTableProps {
-  selectedPeople: IPeople[]
-  setSelectedPeople: (selectedPeople: IPeople[]) => void
+  selectedPeople: IData[] | null
+  setSelectedPeople: (selectedPeople: IData[] | null) => void
 }
 
 const CurrentQueueTable = ({ selectedPeople, setSelectedPeople }: ICurrentQueueTableProps) => {

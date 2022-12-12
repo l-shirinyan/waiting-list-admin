@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-// import { getCookie } from 'utils/cookies';
 
 import { IAuthState } from './model'
 

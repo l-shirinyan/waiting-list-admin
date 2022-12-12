@@ -11,6 +11,7 @@ import { IDetail } from '../../redux/model'
 const SignUp = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const { isAuth } = useAppSelector((state) => state.isAuth)
+  const [inputValue, setInputValue] = useState('')
   const [err, setErr] = useState<string>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -26,7 +27,7 @@ const SignUp = () => {
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      localStorage.setItem('_token', mutate.data.id)
+      localStorage.setItem('_token', mutate.data as string)
       dispatch(setIsAuthenticated(true))
       navigate('/')
     }
@@ -46,9 +47,15 @@ const SignUp = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault()
+    const form = e.target as HTMLFormElement
     const new_user = {
-      email: (e.target as HTMLFormElement).email.value,
-      password: (e.target as HTMLFormElement).password.value,
+      sign: {
+        email: form.email.value,
+        password: form.password.value,
+      },
+      resturant: {
+        name: form.restaurent_name.value,
+      },
     }
     mutate.mutate(new_user)
   }
@@ -105,14 +112,12 @@ const SignUp = () => {
                   Mobile number
                 </label>
                 <div className='w-full relative'>
-                  <TelInput />
+                  <TelInput inputValue={inputValue} setInputValue={setInputValue} />
                 </div>
                 <span className='text-xs leading-4 text-light-purple'>Optional</span>
               </div>
             </div>
-            <span className='text-sm text-red font-medium'>
-              {err}
-            </span>
+            <span className='text-sm text-red font-medium'>{err}</span>
             <button className='w-full h-[56px] bg-purple rounded-[48px] text-white text-base font-semibold'>
               Register
             </button>
@@ -120,7 +125,7 @@ const SignUp = () => {
           <div className='flex flex-col gap-4 justify-center'>
             <span className='text-base leading-6 text-light-purple'>
               Already have an account?{' '}
-              <Link to='#' className='text-base leading-6 text-purple text-center'>
+              <Link to='/login' className='text-base leading-6 text-purple text-center'>
                 Sign In
               </Link>
             </span>
