@@ -4,11 +4,13 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { ReactComponent as EyeIcon } from '../../assets/icons/eye.svg'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { setIsAuthenticated } from '../../redux/auth/authSlice'
+import { IDetail } from '../../redux/model'
 import { useSignIn } from '../../redux/queries'
 
 const SignIn = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const { isAuth } = useAppSelector((state) => state.isAuth)
+  const [err, setErr] = useState<string>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -27,8 +29,17 @@ const SignIn = () => {
       dispatch(setIsAuthenticated(true))
       navigate('/')
     }
+    if (mutate.isError) {
+      const error = (mutate?.error?.response?.data?.detail[0] as IDetail)?.msg
+      if (error) {
+        setErr(error)
+      } else {
+        setErr(mutate?.error?.response?.data?.detail as string)
+      }
+    }
   }, [mutate])
 
+  console.log(err)
   const togglePassword = () => {
     setPasswordShown(!passwordShown)
   }
@@ -72,9 +83,7 @@ const SignIn = () => {
                 <EyeIcon onClick={togglePassword} className='absolute right-5 top-5' />
               </div>
             </div>
-            <span className='text-sm text-red font-medium'>
-              {mutate.isError ? mutate?.error?.response?.data?.detail : ''}
-            </span>
+            <span className='text-sm text-red font-medium'>{err}</span>
             <button className='w-full h-[56px] bg-purple rounded-[48px] text-white text-base font-semibold'>
               Log In
             </button>
