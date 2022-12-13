@@ -6,7 +6,7 @@ import { ReactComponent as CheckIcon } from '../../assets/icons/check.svg'
 import { ReactComponent as Visibility } from '../../assets/icons/visibility.svg'
 import { useAppSelector } from '../../hooks/redux'
 import { IData } from '../../redux/queue/model'
-import { getQueue } from '../../redux/queries'
+import { currentQueue, getQueue, updateQueue } from '../../redux/queries'
 import { useDispatch } from 'react-redux'
 import { currentQueueData } from '../../redux/queue/queueSlice'
 
@@ -27,19 +27,30 @@ const CurrentQueueTbody = ({
 }: ICurrentQueueTbody) => {
   const [selected, setSelected] = useState(publishingOptions[0])
   const { queueData } = useAppSelector((state) => state.queueData)
-  // const dispatch = useDispatch()
-  const { mutate } = getQueue('patch')
+  const dispatch = useDispatch()
+  const { mutate } = updateQueue('patch')
+  const { mutate: request } = getQueue()
 
-  const handleChangeBookingStatus = (id: number, status: string) => {
-    // mutate.mutate(status)
+  const handleChangeBookingStatus = (status: string, id: number) => {
+    mutate.mutate({
+      url: `https://yqrc-api-queue.gaytomycode.com/v1/waitinglist/${id}`,
+      status,
+      id,
+    })
   }
-  // useEffect(() => {
-  //   if (mutate.isSuccess && queueData) {
-  //     console.log(mutate.data)
-  //     const data = [...queueData]
-  //     // dispatch(currentQueueData(data.splice()))
-  //   }
-  // }, [mutate])
+
+  useEffect(() => {
+    if (mutate.isSuccess) {
+      request.mutate(process.env.REACT_APP_QUEUE_URL + '/today/')
+    }
+  }, [mutate.isSuccess])
+
+  useEffect(() => {
+    if (request.isSuccess) {
+      dispatch(currentQueueData(request.data))
+    }
+  }, [request.isSuccess])
+
   return (
     <tbody className='divide-y bg-white'>
       {queueData?.map(
@@ -99,7 +110,9 @@ const CurrentQueueTbody = ({
                                 aria-hidden='true'
                                 className='w-[9px] h-[9px] bg-purple rounded-[50%]'
                               ></div>
-                              <p className='ml-2.5 text-sm font-medium'>{person.status}</p>
+                              <p className='ml-2.5 text-sm font-medium'>
+                                {person.status === 'NO_SHOW' ? 'No show' : person.status}
+                              </p>
                             </div>
                             <Listbox.Button className='inline-flex items-center rounded-l-none rounded-r-[84px] border-[1px] border-grey bg-perwinkle-purple p-2 text-sm font-medium text-purple-blue focus:outline-none focus:ring-2 focus:ring-offset-gray-50'>
                               <span className='sr-only'>Change published status</span>
@@ -122,7 +135,7 @@ const CurrentQueueTbody = ({
                             {publishingOptions.map((option) => (
                               <Listbox.Option
                                 key={option.title}
-                                onClick={() => handleChangeBookingStatus(person.id, option.title)}
+                                onClick={() => handleChangeBookingStatus(option.title, person.id)}
                                 className='cursor-default select-none text-purple-blue pl-2 py-2 pr-[10px] text-sm font-semibold'
                                 value={option}
                               >
@@ -136,7 +149,7 @@ const CurrentQueueTbody = ({
                                       >
                                         {option.title}
                                       </p>
-                                      {selected ? (
+                                      {person.status === option.title ? (
                                         <div className='flex justify-between items-center gap-4'>
                                           <div className='w-full bg-purple-50 h-[18px] flex justify-center items-center'>
                                             <span className='light-purple text-[8px] font-semibold'>
@@ -172,7 +185,7 @@ const CurrentQueueTbody = ({
                       seated.includes(person.id) ? 'text-white' : 'text-purple'
                     }`}
                   >
-                    {person.status}
+                    {person.status === 'NO_SHOW' ? 'No show' : person.status}
                   </span>
                 </div>
                 <div

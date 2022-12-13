@@ -49,7 +49,7 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
   return (
     <div className='mt-4 flex flex-col pb-6'>
       <div className='flex flex-col gap-12'>
-        <ReservationListbox person={data} />
+        <ReservationListbox person={reservation} />
         <div className='w-full flex flex-col gap-12'>
           <div className='w-full min-h-[76px] items-center flex gap-[53px] flex-wrap justify-center sm:justify-start'>
             <div className='flex flex-col gap-2 items-center w-[38%]'>

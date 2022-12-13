@@ -91,3 +91,15 @@ export function currentQueue(url?: string, method = 'get') {
     }),
   }
 }
+
+export function updateQueue(method = 'get') {
+  return {
+    mutate: useMutation({
+      mutationFn: (body?: { url: string; id: number; status: string }) =>
+        apiRequest(body?.url, method, body, {
+          ...headers,
+          Authorization: localStorage.getItem('_token'),
+        }),
+    }),
+  }
+}
