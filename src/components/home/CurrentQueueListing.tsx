@@ -15,6 +15,7 @@ const CurrentQueueListing = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const { data, isSuccess, isLoading } = useFetch(
     process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`,
+    'queueKey',
   )
   const { queueData } = useAppSelector((state) => state.queueData)
   const { mutate } = getQueue()

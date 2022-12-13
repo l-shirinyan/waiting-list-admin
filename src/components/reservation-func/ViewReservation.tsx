@@ -21,7 +21,7 @@ let prev: IData
 const ViewReservation = ({ detail, setDetail, queueData }: IViewReservation) => {
   const [reservation, setReservation] = useState<IData>()
   const [siblings, setSiblings] = useState<ISiblings>()
-  const { data } = useFetch(process.env.REACT_APP_QUEUE_URL + `/${detail}`)
+  const { data } = useFetch(process.env.REACT_APP_QUEUE_URL + `/${detail}`,'reservationKey')
   const { mutate } = getQueue()
   useEffect(() => {
     if (queueData) {
