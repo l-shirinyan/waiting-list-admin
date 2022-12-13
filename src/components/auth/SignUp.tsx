@@ -6,10 +6,12 @@ import { TelInput } from '../Input/PhoneInput'
 import { useSignUp } from '../../redux/queries'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
 import { setIsAuthenticated } from '../../redux/auth/authSlice'
+import { IDetail } from '../../redux/model'
 
 const SignUp = () => {
   const [passwordShown, setPasswordShown] = useState(false)
   const { isAuth } = useAppSelector((state) => state.isAuth)
+  const [err, setErr] = useState<string>()
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -28,8 +30,15 @@ const SignUp = () => {
       dispatch(setIsAuthenticated(true))
       navigate('/')
     }
+    if (mutate.isError) {
+      const error = (mutate?.error?.response?.data?.detail[0] as IDetail)?.msg
+      if (error) {
+        setErr(error)
+      } else {
+        setErr(mutate?.error?.response?.data?.detail as string)
+      }
+    }
   }, [mutate])
-
 
   const togglePassword = () => {
     setPasswordShown(!passwordShown)
@@ -102,7 +111,7 @@ const SignUp = () => {
               </div>
             </div>
             <span className='text-sm text-red font-medium'>
-              {mutate.isError ? mutate.error.response.data.detail : ''}
+              {err}
             </span>
             <button className='w-full h-[56px] bg-purple rounded-[48px] text-white text-base font-semibold'>
               Register
