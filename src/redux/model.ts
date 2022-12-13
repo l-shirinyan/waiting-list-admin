@@ -9,3 +9,4 @@ export type SuccessResponse = {
 export interface IDetail {
   msg: string
 }
+

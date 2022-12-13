@@ -1,10 +1,11 @@
 import { Listbox, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/24/outline'
 import { Fragment } from 'react'
-import { IPeople, publishingOptions } from '../../utils/constants'
+import { IData } from '../../redux/queue/model'
+import { publishingOptions } from '../../utils/constants'
 
 interface IReservationListbox {
-  person?: IPeople
+  person?: IData
 }
 
 const ReservationListbox = ({ person }: IReservationListbox) => {
@@ -18,7 +19,7 @@ const ReservationListbox = ({ person }: IReservationListbox) => {
               <div className='inline-flex divide-x w-full rounded border-[1px] border-r-none border-light-grey '>
                 <div className='inline-flex items-center gap-3 py-2 pl-3 pr-4 text-white shadow-sm w-full max-w-[446px] h-[53px]'>
                   <p className='ml-2.5 text-lg font-semibold leading-6 text-purple-blue'>
-                    {person?.bookingStatus}
+                    {person?.status}
                   </p>
                   <div className='flex justify-center items-center bg-purple-50 w-[74px] h-6 rounded'>
                     <span className='text-purple text-[8px] leading-3 font-semibold'>

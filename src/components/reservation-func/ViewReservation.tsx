@@ -1,53 +1,58 @@
 import { useEffect, useState } from 'react'
-import { IPeople, people as data } from '../../utils/constants'
 import { ReactComponent as ArrowLeft } from '../../assets/icons/arrowleft.svg'
 import { ReactComponent as ArrowRight } from '../../assets/icons/arrow-right.svg'
 import { ReservationListbox } from './ReservationListbox'
-
+import { IData } from '../../redux/queue/model'
+import { getQueue, useFetch } from '../../redux/queries'
+import { useAppSelector } from '../../hooks/redux'
+import moment from 'moment'
 interface IViewReservation {
   detail?: number
   setDetail: (detail: number) => void
 }
 
 interface ISiblings {
-  prev: IPeople
-  next: IPeople
+  prev: IData
+  next: IData
 }
-
+let next: IData
+let prev: IData
 const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
-  const [person, setPerson] = useState<IPeople>()
+  const [reservation, setReservation] = useState<IData>()
   const [siblings, setSiblings] = useState<ISiblings>()
-  const [detailData, setDetailData] = useState([...data])
-
+  const { queueData } = useAppSelector((state) => state.queueData)
+  const { data } = useFetch(process.env.REACT_APP_QUEUE_URL + `/${detail}`)
+  const { mutate } = getQueue()
   useEffect(() => {
-    setDetailData([...data])
-    const item = detailData.find((el) => {
-      return el.id === detail
-    })
-    setPerson(item)
-    const index = detailData.findIndex((x) => x.id === detail)
-    const next = detailData.splice(index + 1, 1)[0]
-    const prev = detailData.splice(index - 1, 1)[0]
-    setSiblings({ prev, next })
-  }, [detail])
+    if (queueData) {
+      const tableData = [...queueData]
+      const index = tableData.findIndex((x) => x.id === detail)
+      next = tableData.splice(index + 1, 1)[0]
+      prev = tableData.splice(index - 1, 1)[0]
+      setSiblings({ prev, next })
+    }
+    setReservation(data)
+    mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/${detail}`)
+    if (mutate.isSuccess) {
+      setReservation(mutate.data)
+    }
+  }, [detail, data])
 
   const handleChangeDetail = (item: string) => {
     if (item === 'prev') {
-      const index = detailData.findIndex((x) => x.id === siblings?.prev.id)
-      setDetail(index)
+      setDetail(prev.id)
     } else if (item === 'next') {
-      const index = detailData.findIndex((x) => x.id === siblings?.next.id)
-      setDetail(index)
+      setDetail(next.id)
     }
   }
 
   return (
     <div className='mt-4 flex flex-col pb-6'>
       <div className='flex flex-col gap-12'>
-        <ReservationListbox person={person} />
+        <ReservationListbox person={reservation} />
         <div className='w-full flex flex-col gap-12'>
           <div className='w-full min-h-[76px] items-center flex gap-[53px] flex-wrap justify-center sm:justify-start'>
-            <div className='flex flex-col gap-2 items-center'>
+            <div className='flex flex-col gap-2 items-center w-[38%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
@@ -55,10 +60,10 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
                 </span>
               </div>
               <span className='text-purple-blue text-base font-semibold leading-5'>
-                {person?.reservation_number}
+                {reservation?.guest_count}
               </span>
             </div>
-            <div className='flex flex-col gap-2 items-center'>
+            <div className='flex flex-col gap-2 items-center w-[44%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
@@ -67,13 +72,13 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
               </div>
               <div className='bg-yellow-100 p-[6px] flex justify-center items-center rounded'>
                 <span className='text-purple-blue text-base font-semibold leading-5'>
-                  {person?.queueNumber} in line
+                  {reservation?.order_in_queue} in line
                 </span>
               </div>
             </div>
           </div>
           <div className='w-full min-h-[76px] items-center bg-light flex gap-[53px] flex-wrap justify-center sm:justify-start'>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 w-[38%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
@@ -81,10 +86,10 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
                 </span>
               </div>
               <span className='text-purple-blue text-base font-semibold leading-5 max-w-[146px]'>
-                {person?.guestName}
+                {reservation?.guest_name}
               </span>
             </div>
-            <div className='flex flex-col gap-2 items-center'>
+            <div className='flex flex-col gap-2 items-center w-[44%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
@@ -92,12 +97,12 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
                 </span>
               </div>
               <span className='text-purple-blue text-base font-semibold leading-5'>
-                {person?.phoneNamber}
+                {reservation?.phone_number}
               </span>
             </div>
           </div>
           <div className='w-full min-h-[76px] items-center flex gap-[53px] flex-wrap justify-center sm:justify-start'>
-            <div className='flex flex-col gap-2 items-center'>
+            <div className='flex flex-col gap-2 items-center w-[35%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
@@ -105,17 +110,19 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
                 </span>
               </div>
               <span className='text-purple-blue text-base font-semibold leading-5'>
-                {person?.bookingStatus}
+                {reservation?.status}
               </span>
             </div>
-            <div className='flex flex-col gap-2 items-center'>
+            <div className='flex flex-col gap-2 items-center w-[40%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
-                  Reservation Time
+                  data Time
                 </span>
               </div>
-              <span className='text-purple-blue text-base font-semibold leading-5'>11:34 pm</span>
+              <span className='text-purple-blue text-base font-semibold leading-5'>
+                {moment(reservation?.added_on).format('LT')}
+              </span>
             </div>
           </div>
           <div className='w-full min-h-[76px] items-center bg-light flex gap-[53px] flex-wrap justify-center sm:justify-start sm:gap-[123px]'>
@@ -128,14 +135,16 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
               </div>
               <span className='text-purple-blue text-base font-semibold leading-5'>Outdoor</span>
             </div>
-            <div className='flex flex-col gap-2 items-center'>
+            <div className='flex flex-col gap-2 items-center w-[48%]'>
               <div className='flex gap-2 items-center'>
                 <div className=' w-[4px] h-[14px] bg-purple rounded'></div>
                 <span className='font-semibold text-sm leading-[17px] text-light-purple'>
                   Number of Guest
                 </span>
               </div>
-              <span className='text-purple-blue text-base font-semibold leading-5'>6 guest</span>
+              <span className='text-purple-blue text-base font-semibold leading-5'>
+                {reservation?.guest_count} guest
+              </span>
             </div>
           </div>
           <div className='flex flex-col gap-2'>
@@ -146,8 +155,7 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
               </span>
             </div>
             <span className='text-purple-blue text-base font-semibold leading-5 pl-3'>
-              Need my seats of a table in center established fact that a reader will be distracted
-              by the readable content
+              {reservation?.request}
             </span>
           </div>
         </div>
@@ -162,20 +170,20 @@ const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
           )}
           <div className='flex flex-col max-w-[147px]'>
             <span className='text-purple-blue text-[14px] leading-4 font-semibold'>
-              {siblings?.prev?.reservation_number}
+              {siblings?.prev?.order_in_queue}
             </span>
             <span className='text-light-purple text-[14px] leading-4 font-semibold max-w-[147px]'>
-              {siblings?.prev?.guestName}
+              {siblings?.prev?.guest_name}
             </span>
           </div>
         </div>
         <div className='w-1/2 flex items-center gap-[13px] pl-9'>
           <div className='flex flex-col max-w-[147px]'>
             <span className='text-purple-blue text-[14px] leading-4 font-semibold'>
-              {siblings?.next?.reservation_number}
+              {siblings?.next?.order_in_queue}
             </span>
             <span className='text-light-purple text-[14px] leading-4 font-semibold'>
-              {siblings?.next?.guestName}
+              {siblings?.next?.guest_name}
             </span>
           </div>
           {siblings?.next && (

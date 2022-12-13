@@ -1,14 +1,76 @@
-import { useState } from 'react'
-import { IPeople } from '../../utils/constants'
+import React, { useEffect, useState } from 'react'
 import { ReactComponent as SearchIcon } from '../../assets/icons/search.svg'
 import { ReservationDialog } from '../reservation-func/ReservationDialog'
 import { CurrentQueueTable } from './CurrentQueueTable'
 import { CreateReservation } from '../reservation-func/CreateReservation'
+import { useAppDispatch, useAppSelector } from '../../hooks/redux'
+import { currentQueue, getQueue, useFetch } from '../../redux/queries'
+import { currentQueueData } from '../../redux/queue/queueSlice'
+import { IData } from '../../redux/queue/model'
 
 const CurrentQueueListing = () => {
-  const [selectedPeople, setSelectedPeople] = useState<IPeople[]>([])
+  const [selectedPeople, setSelectedPeople] = useState<IData[] | null>([])
   const [open, setOpen] = useState(false)
+  const [order, setOrder] = useState('asc')
+  const [searchTerm, setSearchTerm] = useState('')
+  const { data, isSuccess } = useFetch(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+  const { queueData } = useAppSelector((state) => state.queueData)
+  const { mutate } = getQueue()
+  const dispatch = useAppDispatch()
+  const { mutate: request } = currentQueue(
+    'https://yqrc-api-queue.gaytomycode.com/v1/waitinglist',
+    'patch',
+  )
+  const searchData = queueData ? [...queueData] : null
 
+  useEffect(() => {
+    if (isSuccess) {
+      dispatch(currentQueueData(data))
+    }
+  }, [isSuccess])
+
+  useEffect(() => {
+    if (mutate.isSuccess) {
+      dispatch(currentQueueData(mutate?.data))
+    }
+  }, [mutate.isSuccess])
+
+  useEffect(() => {
+    if (request.isSuccess) {
+      mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+    }
+  }, [request.isSuccess])
+
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      if (queueData) {
+        if (searchTerm.length >= 3) {
+          const searched = searchData?.filter((elem) =>
+            elem.guest_name.toLowerCase().includes(searchTerm?.toLowerCase()),
+          )
+          dispatch(currentQueueData(searched))
+        } else {
+          mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+        }
+      }
+    }, 2000)
+    return () => clearTimeout(delayDebounceFn)
+  }, [searchTerm])
+
+  const handleSortBy = (order: string) => {
+    setOrder(order)
+    mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+  }
+
+  const handleChangeStatus = (status: string) => {
+    const data = selectedPeople?.map((el) => {
+      return { id: el.id, status }
+    })
+    request.mutate(data)
+  }
+  const handleSearch = (e: React.SyntheticEvent) => {
+    setSearchTerm((e.target as HTMLInputElement).value)
+  }
   return (
     <div className='pt-[46px] flex flex-col gap-8 pl-5 pr-5 xl:pl-[43px] xl:pr-[61px]'>
       <div className='flex justify-between'>
@@ -30,7 +92,7 @@ const CurrentQueueListing = () => {
               type='button'
               className='inline-flex items-center justify-center rounded-[6px] h-[32px] w-full max-w-[91px] bg-purple-500 text-purple text-sm font-medium shadow-sm sm:ml-[13px]'
             >
-              312 Records
+              {queueData?.length} Records
             </button>
           </div>
         </div>
@@ -40,6 +102,7 @@ const CurrentQueueListing = () => {
               type='text'
               name='search'
               id='search'
+              onChange={handleSearch}
               className='block w-full px-3 h-10 rounded-full bg-purple-500 text-xs text-semibold border-[1px] border-grey placeholder:text-xs placeholder:font-semibold sm:text-sm'
               placeholder='search for reservation'
             />
@@ -47,28 +110,59 @@ const CurrentQueueListing = () => {
           </div>
           <div className='flex w-full gap-2 items-center justify-center max-w-[240px]'>
             <h3 className='text-blue text-[15px] font-semibold leading-6'>Sort by:</h3>
-            <div className='w-full max-w-[80px] h-10 bg-grey-50 flex justify-center items-center rounded-[48px]'>
-              <span className='text-blue text-[15px] leading-6 font-semibold'>Oldest</span>
+            <div
+              onClick={() => handleSortBy('asc')}
+              className={`w-full max-w-[80px] h-10 flex justify-center items-center rounded-[48px] ${
+                order === 'asc' ? 'bg-grey-50 ' : ''
+              }`}
+            >
+              <span
+                className={`text-[15px] leading-6 font-semibold ${
+                  order === 'asc' ? 'text-blue' : 'text-purple-pink'
+                }`}
+              >
+                Oldest
+              </span>
             </div>
-            <div className='w-full max-w-[80px] h-10  flex justify-center items-center rounded-[48px]'>
-              <span className='text-purple-pink text-[15px] leading-6 font-semibold'>Newest</span>
+            <div
+              onClick={() => handleSortBy('desc')}
+              className={`w-full max-w-[80px] h-10  flex justify-center items-center rounded-[48px] ${
+                order === 'desc' ? 'bg-grey-50 ' : ''
+              }`}
+            >
+              <span
+                className={`text-[15px] leading-6 font-semibold ${
+                  order === 'desc' ? 'text-blue' : 'text-purple-pink'
+                }`}
+              >
+                Newest
+              </span>
             </div>
           </div>
         </div>
         <div className='flex flex-col gap-[10px]'>
-          {selectedPeople.length ? (
+          {selectedPeople?.length ? (
             <>
               <h3 className='text-base font-semibold leading-5 mt-3'>
-                All {selectedPeople.length} recordes on this page are selected.
+                All {selectedPeople?.length} recordes on this page are selected.
               </h3>
               <div className='flex gap-2'>
-                <div className='bg-purple w-[69px] h-9 flex justify-center items-center rounded-[64px]'>
+                <div
+                  onClick={() => handleChangeStatus('SEATED')}
+                  className='bg-purple w-[69px] h-9 flex justify-center items-center rounded-[64px]'
+                >
                   <span className='text-base font-semibold text-white'>Seated</span>
                 </div>
-                <div className='border-pink border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'>
-                  <span className='text-base font-semibold text-pink'>Canceled</span>
+                <div
+                  onClick={() => handleChangeStatus('CANCELLED')}
+                  className='border-pink border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'
+                >
+                  <span className='text-base font-semibold text-pink'>Cancelled</span>
                 </div>
-                <div className='border-grey-100 border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'>
+                <div
+                  onClick={() => handleChangeStatus('NO_SHOW')}
+                  className='border-grey-100 border-[1px] w-[85px] h-9 flex justify-center items-center rounded-[64px]'
+                >
                   <span className='text-base font-semibold text-light-purple'>No Show</span>
                 </div>
               </div>
@@ -91,7 +185,7 @@ const CurrentQueueListing = () => {
         </div>
       </div>
       <ReservationDialog open={open} setOpen={setOpen} title='Add Reservation manually'>
-        <CreateReservation />
+        <CreateReservation setOpen={setOpen} handleSortBy={handleSortBy} />
       </ReservationDialog>
     </div>
   )

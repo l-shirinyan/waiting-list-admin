@@ -9,17 +9,6 @@ interface ISideBarLinks {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>
   title: string
 }
-export interface IPeople {
-  guestName: string
-  queueNumber: string
-  phoneNamber: string
-  guests: string
-  bookingStatus: string
-  avtive: string
-  id: number
-  reservation_number:string
-}
-
 interface IHistories {
   title: string
   num: number
@@ -68,70 +57,6 @@ export const sideBarLinks: ISideBarLinks[] = [
     title: 'QR Code',
   },
 ]
-
-export const people: IPeople[] = [
-  {
-    guestName: 'Ahmed Goudaa Moham..',
-    queueNumber: '13th',
-    phoneNamber: '+2 010 765 599 98',
-    guests: '4 Guest',
-    bookingStatus: 'Booked',
-    avtive: 'Seated',
-    id: 1,
-    reservation_number: '#98575665',
-  },
-  {
-    guestName: 'Ahmed Goudaa Moham..',
-    queueNumber: '13th',
-    phoneNamber: '+2 010 765 599 98',
-    guests: '4 Guest',
-    bookingStatus: 'Booked',
-    avtive: 'Seated',
-    id: 10,
-    reservation_number: '#98575665',
-  },
-  {
-    guestName: 'Ahmed Goudaa Moham..',
-    queueNumber: '13th',
-    phoneNamber: '+2 010 765 599 98',
-    guests: '4 Guest',
-    bookingStatus: 'Booked',
-    avtive: 'Seated',
-    id: 2,
-    reservation_number: '#98575665',
-  },
-  {
-    guestName: 'Ahmed Goudaa Moham..',
-    queueNumber: '13th',
-    phoneNamber: '+2 010 765 599 98',
-    guests: '4 Guest',
-    bookingStatus: 'Booked',
-    avtive: 'Seated',
-    id: 3,
-    reservation_number: '#98575665',
-  },
-  {
-    guestName: 'Ahmed Goudaa Moham..',
-    queueNumber: '13th',
-    phoneNamber: '+2 010 765 599 98',
-    guests: '4 Guest',
-    bookingStatus: 'Booked',
-    avtive: 'Seated',
-    id: 4,
-    reservation_number: '#98575665',
-  },
-  {
-    guestName: 'Ahmed Goudaa Moham..',
-    queueNumber: '13th',
-    phoneNamber: '+2 010 765 599 98',
-    guests: '4 Guest',
-    bookingStatus: 'Booked',
-    avtive: 'Seated',
-    id: 5,
-    reservation_number: '#98575665',
-  },
-]
-
 export const histories: IHistories[] = [
   {
     title: 'Booked Reservations',
@@ -228,15 +153,15 @@ export const qrcode: IQrCode[] = [
 
 export const publishingOptions: IPublishingOptions[] = [
   {
-    title: 'Booked',
+    title: 'BOOKED',
     current: true,
   },
   {
-    title: 'Draft',
+    title: 'SEATED',
     current: false,
   },
   {
-    title: 'Canceled',
+    title: 'CANCELLED',
     current: false,
   },
 ]

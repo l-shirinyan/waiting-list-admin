@@ -1,7 +1,15 @@
 import ProfilePicture from '../../assets/images/profile.png'
 import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg'
+import { useAppDispatch } from '../../hooks/redux'
+import { setIsAuthenticated } from '../../redux/auth/authSlice'
 
 const SideBarViewProfile = () => {
+  const dispatch = useAppDispatch()
+
+  const handleLogOut = () => {
+    localStorage.removeItem('_token')
+    dispatch(setIsAuthenticated(false))
+  }
   return (
     <div className='pl-2 pr-2 pb-9'>
       <div className='flex flex-shrink-0 rounded-[56px] border-[1px] border-grey p-1 w-[241px]'>
@@ -19,7 +27,9 @@ const SideBarViewProfile = () => {
                 <p className='text-base text-light-purple leading-4 font-semibold'>Queen Sheb...</p>
                 <p className='text-base text-light-purple leading-4 mt-2'>Queen@gmail.com</p>
               </div>
-              <LogoutIcon />
+              <button onClick={handleLogOut}>
+                <LogoutIcon />
+              </button>
             </div>
           </div>
         </a>
