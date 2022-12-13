@@ -9,10 +9,6 @@ interface ISideBarLinks {
   Icon: FunctionComponent<SVGProps<SVGSVGElement>>
   title: string
 }
-interface IHistories {
-  title: string
-  num: number
-}
 
 interface IReservations {
   reservationNumber: string
@@ -57,25 +53,6 @@ export const sideBarLinks: ISideBarLinks[] = [
     title: 'QR Code',
   },
 ]
-export const histories: IHistories[] = [
-  {
-    title: 'Booked Reservations',
-    num: 7632,
-  },
-  {
-    title: 'Seated Reservations',
-    num: 7632,
-  },
-  {
-    title: 'Canceled Reservations',
-    num: 7632,
-  },
-  {
-    title: 'No Show Reservations',
-    num: 7632,
-  },
-]
-
 export const reservations: IReservations[] = [
   {
     reservationNumber: '87465574',

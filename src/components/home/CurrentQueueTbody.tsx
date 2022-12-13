@@ -6,7 +6,7 @@ import { ReactComponent as CheckIcon } from '../../assets/icons/check.svg'
 import { ReactComponent as Visibility } from '../../assets/icons/visibility.svg'
 import { useAppSelector } from '../../hooks/redux'
 import { IData } from '../../redux/queue/model'
-import { currentQueue, getQueue, updateQueue } from '../../redux/queries'
+import { getQueue, updateQueue } from '../../redux/queries'
 import { useDispatch } from 'react-redux'
 import { currentQueueData } from '../../redux/queue/queueSlice'
 
@@ -111,7 +111,16 @@ const CurrentQueueTbody = ({
                                 className='w-[9px] h-[9px] bg-purple rounded-[50%]'
                               ></div>
                               <p className='ml-2.5 text-sm font-medium'>
-                                {person.status === 'NO_SHOW' ? 'No show' : person.status}
+                                {' '}
+                                {person?.status === 'NO_SHOW'
+                                  ? 'No Show'
+                                  : person?.status === 'BOOKED'
+                                  ? 'Booked'
+                                  : person?.status === 'SEATED'
+                                  ? 'Seated'
+                                  : person?.status === 'CANCELLED'
+                                  ? 'Cancelled'
+                                  : person?.status}{' '}
                               </p>
                             </div>
                             <Listbox.Button className='inline-flex items-center rounded-l-none rounded-r-[84px] border-[1px] border-grey bg-perwinkle-purple p-2 text-sm font-medium text-purple-blue focus:outline-none focus:ring-2 focus:ring-offset-gray-50'>
@@ -185,7 +194,16 @@ const CurrentQueueTbody = ({
                       seated.includes(person.id) ? 'text-white' : 'text-purple'
                     }`}
                   >
-                    {person.status === 'NO_SHOW' ? 'No show' : person.status}
+                    {' '}
+                    {person?.status === 'NO_SHOW'
+                      ? 'No Show'
+                      : person?.status === 'BOOKED'
+                      ? 'Booked'
+                      : person?.status === 'SEATED'
+                      ? 'Seated'
+                      : person?.status === 'CANCELLED'
+                      ? 'Cancelled'
+                      : person?.status}{' '}
                   </span>
                 </div>
                 <div
