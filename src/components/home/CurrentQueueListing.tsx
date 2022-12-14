@@ -13,7 +13,7 @@ const CurrentQueueListing = () => {
   const [open, setOpen] = useState(false)
   const [order, setOrder] = useState('asc')
   const [searchTerm, setSearchTerm] = useState('')
-  const { data, isSuccess, isLoading } = useFetch(`/today/?sort=${order}`, 'queueKey')
+  const { data, isSuccess, isLoading } = useFetch(`/v1/waitinglist/today/?sort=${order}`, 'queueKey')
   const { queueData } = useAppSelector((state) => state.queueData)
   const { mutate } = getQueue()
   const dispatch = useAppDispatch()

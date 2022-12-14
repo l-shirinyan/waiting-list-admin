@@ -21,7 +21,7 @@ let prev: IData
 const ViewReservation = ({ detail, setDetail, queueData }: IViewReservation) => {
   const [reservation, setReservation] = useState<IData>()
   const [siblings, setSiblings] = useState<ISiblings>()
-  const { data } = useFetch(`/${detail}`, 'reservationKey')
+  const { data } = useFetch(`/v1/waitinglist/${detail}`, 'reservationKey')
   const { mutate } = getQueue()
   useEffect(() => {
     if (queueData) {

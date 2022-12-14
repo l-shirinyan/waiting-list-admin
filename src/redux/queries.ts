@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { apiRequest } from '../configs/requests'
-import { IDENTITY_URL } from '../utils/constants'
+import { IDENTITY_URL, SEAT_URL, TERMS_URL } from '../utils/constants'
 import { ErrorResponseSignUp, SuccessResponse } from './model'
 
 const headers = {
@@ -10,10 +10,29 @@ const headers = {
 export const register = async (body: { sign: object; resturant: object }) => {
   const sign = await apiRequest('/v1/register', 'post', body.sign, headers, IDENTITY_URL)
 
-  await apiRequest('https://yqrc-api-resturant.gaytomycode.com/v1/', 'post', body.resturant, {
-    ...headers,
-    Authorization: sign,
-  })
+  await apiRequest(
+    '',
+    'post',
+    body?.resturant,
+    {
+      ...headers,
+      Authorization: sign.auth,
+    },
+    'https://yqrc-api-resturant.gaytomycode.com/v1/',
+  )
+
+  await apiRequest(
+    '',
+    'post',
+    {
+      text: '50% of new customers explore products because the author sharing the work on the social media network. Gain your earnings right now! 🔥',
+    },
+    {
+      ...headers,
+      Authorization: sign.auth,
+    },
+    TERMS_URL,
+  )
   return sign
 }
 
@@ -64,10 +83,11 @@ export function useFetch(url: string, queryKey: string) {
   return useQuery({
     queryKey: [queryKey],
     queryFn: () =>
-      apiRequest('/v1/waitinglist' + url, 'get', undefined, {
+      apiRequest(url, 'get', undefined, {
         ...headers,
         Authorization: localStorage.getItem('_token'),
       }),
+    retry: false,
   })
 }
 
@@ -105,4 +125,56 @@ export function updateQueue(method = 'get') {
         }),
     }),
   }
+}
+
+export function updateDetail(url: string, method = 'patch') {
+  return {
+    mutate: useMutation({
+      mutationFn: (body?: object) =>
+        apiRequest(
+          '',
+          method,
+          body,
+          {
+            ...headers,
+            Authorization: localStorage.getItem('_token'),
+          },
+          url,
+        ),
+    }),
+  }
+}
+
+export function getSeatAreas(uri?: string, method = 'get', queryKey?: string) {
+  return useQuery({
+    queryKey: [queryKey],
+    queryFn: (body?: object) =>
+      apiRequest(
+        uri,
+        method,
+        body,
+        {
+          ...headers,
+          Authorization: localStorage.getItem('_token'),
+        },
+        SEAT_URL,
+      ),
+  })
+}
+
+export function getTerms(uri?: string, method = 'get', queryKey?: string) {
+  return useQuery({
+    queryKey: [queryKey],
+    queryFn: (body?: object) =>
+      apiRequest(
+        uri,
+        method,
+        body,
+        {
+          ...headers,
+          Authorization: localStorage.getItem('_token'),
+        },
+        TERMS_URL,
+      ),
+  })
 }

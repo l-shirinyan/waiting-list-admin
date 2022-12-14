@@ -9,7 +9,7 @@ const DataHistory = () => {
   const [order, setOrder] = useState('asc')
   const [skip, setSkip] = useState(0)
   const { data, isSuccess, isLoading } = useFetch(
-    `/?sort=${order}&skip=${skip * 8}&limit=8`,
+    `/v1/waitinglist/?sort=${order}&skip=${skip * 8}&limit=8`,
     'historyTable',
   )
   const dispatch = useAppDispatch()

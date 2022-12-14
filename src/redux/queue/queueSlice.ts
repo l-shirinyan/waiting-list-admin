@@ -3,6 +3,7 @@ import { IQueueData } from './model'
 
 const initialState: IQueueData = {
   queueData: null,
+  seatingAreas: null,
 }
 const queueSlice = createSlice({
   name: 'queueData',
@@ -14,7 +15,10 @@ const queueSlice = createSlice({
     addNewQueue: (state, action) => {
       state.queueData = state.queueData && [...state.queueData, action.payload]
     },
+    fetchSeatAreas: (state, action) => {
+      state.seatingAreas = action.payload
+    },
   },
 })
-export const { currentQueueData, addNewQueue } = queueSlice.actions
+export const { currentQueueData, addNewQueue, fetchSeatAreas } = queueSlice.actions
 export default queueSlice.reducer

@@ -30,7 +30,7 @@ const SignUp = () => {
       localStorage.setItem('_token', mutate.data?.auth)
       localStorage.setItem('identity_id', mutate.data?.identity_id)
       dispatch(setIsAuthenticated(true))
-      setIdentity_id(setIdentity_id(mutate.data?.identity_id))
+      dispatch(setIdentity_id(mutate.data?.identity_id))
       navigate('/')
     }
     if (mutate.isError) {

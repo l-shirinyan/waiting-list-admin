@@ -1,5 +1,6 @@
 export interface IQueueData {
   queueData: null | IData[]
+  seatingAreas: null | ISeat[]
 }
 
 export interface IData {
@@ -12,4 +13,11 @@ export interface IData {
   id: number
   added_on: string
   status: string
+}
+
+interface ISeat {
+  name: string
+  identity_id: number
+  id: number
+  is_active: boolean
 }

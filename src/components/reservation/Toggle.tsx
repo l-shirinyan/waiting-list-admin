@@ -1,9 +1,9 @@
 import { Switch } from '@headlessui/react'
-import { useState } from 'react'
-
-const Toggle = () => {
-  const [enabled, setEnabled] = useState(false)
-
+interface IToggle {
+  enabled: boolean
+  setEnabled: (enabled: boolean) => void
+}
+const Toggle = ({ enabled, setEnabled }: IToggle) => {
   return (
     <Switch.Group as='div' className='flex items-center justify-between'>
       <Switch
