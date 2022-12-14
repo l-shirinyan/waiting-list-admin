@@ -4,11 +4,12 @@ import { ReactComponent as ArrowRight } from '../../assets/icons/arrow-right.svg
 import { ReservationListbox } from './ReservationListbox'
 import { IData } from '../../redux/queue/model'
 import { getQueue, useFetch } from '../../redux/queries'
-import { useAppSelector } from '../../hooks/redux'
 import moment from 'moment'
+import { IResults } from '../../redux/history/model'
 interface IViewReservation {
   detail?: number
   setDetail: (detail: number) => void
+  queueData: IData[] | null | IResults[]
 }
 
 interface ISiblings {
@@ -17,11 +18,10 @@ interface ISiblings {
 }
 let next: IData
 let prev: IData
-const ViewReservation = ({ detail, setDetail }: IViewReservation) => {
+const ViewReservation = ({ detail, setDetail, queueData }: IViewReservation) => {
   const [reservation, setReservation] = useState<IData>()
   const [siblings, setSiblings] = useState<ISiblings>()
-  const { queueData } = useAppSelector((state) => state.queueData)
-  const { data } = useFetch(process.env.REACT_APP_QUEUE_URL + `/${detail}`)
+  const { data } = useFetch(process.env.REACT_APP_QUEUE_URL + `/${detail}`,'reservationKey')
   const { mutate } = getQueue()
   useEffect(() => {
     if (queueData) {

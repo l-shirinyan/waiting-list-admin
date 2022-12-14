@@ -57,9 +57,9 @@ export function useSignUp(body: object) {
   }
 }
 
-export function useFetch(url?: string) {
+export function useFetch(url: string, queryKey: string) {
   return useQuery({
-    queryKey: ['repoData'],
+    queryKey: [queryKey],
     queryFn: () =>
       apiRequest(url, 'get', undefined, {
         ...headers,

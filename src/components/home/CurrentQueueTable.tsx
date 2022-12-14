@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useAppSelector } from '../../hooks/redux'
 import { IData } from '../../redux/queue/model'
 import { ReservationDialog } from '../reservation-func/ReservationDialog'
 import { ViewReservation } from '../reservation-func/ViewReservation'
@@ -12,6 +13,7 @@ interface ICurrentQueueTableProps {
 const CurrentQueueTable = ({ selectedPeople, setSelectedPeople }: ICurrentQueueTableProps) => {
   const [open, setOpen] = useState(false)
   const [detail, setDetail] = useState<number>()
+  const { queueData } = useAppSelector((state) => state.queueData)
 
   return (
     <div>
@@ -22,7 +24,7 @@ const CurrentQueueTable = ({ selectedPeople, setSelectedPeople }: ICurrentQueueT
         setSelectedPeople={setSelectedPeople}
       />
       <ReservationDialog open={open} setOpen={setOpen} title='Reservation Details'>
-        <ViewReservation detail={detail} setDetail={setDetail} />
+        <ViewReservation queueData={queueData} detail={detail} setDetail={setDetail} />
       </ReservationDialog>
     </div>
   )
