@@ -33,7 +33,7 @@ const CurrentQueueTbody = ({
 
   const handleChangeBookingStatus = (status: string, id: number) => {
     mutate.mutate({
-      url: `https://yqrc-api-queue.gaytomycode.com/v1/waitinglist/${id}`,
+      url: `/${id}`,
       status,
       id,
     })
@@ -41,7 +41,7 @@ const CurrentQueueTbody = ({
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      request.mutate(process.env.REACT_APP_QUEUE_URL + '/today/')
+      request.mutate('/today/')
     }
   }, [mutate.isSuccess])
 

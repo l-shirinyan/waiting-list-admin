@@ -9,7 +9,7 @@ const DataHistory = () => {
   const [order, setOrder] = useState('asc')
   const [skip, setSkip] = useState(0)
   const { data, isSuccess, isLoading } = useFetch(
-    process.env.REACT_APP_QUEUE_URL + `/?sort=${order}&skip=${skip * 8}&limit=8`,
+    `/?sort=${order}&skip=${skip * 8}&limit=8`,
     'historyTable',
   )
   const dispatch = useAppDispatch()
@@ -27,7 +27,7 @@ const DataHistory = () => {
   }, [mutate])
 
   const handleChangePage = useCallback((page: number) => {
-    mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/?sort=${order}&skip=${page * 8}&limit=8`)
+    mutate.mutate(`/?sort=${order}&skip=${page * 8}&limit=8`)
     setSkip(page)
   }, [])
 

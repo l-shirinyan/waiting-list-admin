@@ -5,10 +5,7 @@ import { getStatsCount } from '../../redux/history/historySlice'
 import { useFetch } from '../../redux/queries'
 
 const HistoryPageHeading = () => {
-  const { data, isLoading, isSuccess } = useFetch(
-    process.env.REACT_APP_QUEUE_URL + '/stats/',
-    'statsData',
-  )
+  const { data, isLoading, isSuccess } = useFetch('/stats/', 'statsData')
   const dispatch = useDispatch()
   const { stats } = useAppSelector((state) => state.historyData)
   useEffect(() => {

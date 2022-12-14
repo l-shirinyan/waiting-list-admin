@@ -40,7 +40,7 @@ const HistoryListing = ({ setOrder, order, setSkip, skip }: IHistoryListing) => 
           )
           dispatch(getHistoryData(searched))
         } else {
-          mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/?sort=${order}`)
+          mutate.mutate(`/?sort=${order}`)
         }
       }
     }, 1000)
@@ -52,7 +52,7 @@ const HistoryListing = ({ setOrder, order, setSkip, skip }: IHistoryListing) => 
   }
   const handleSortBy = (sort: string) => {
     setOrder(sort)
-    mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/?sort=${sort}&skip=${skip * 8}&limit=8`)
+    mutate.mutate(`/?sort=${sort}&skip=${skip * 8}&limit=8`)
   }
   return (
     <div className='w-full h-full bg-white'>
@@ -119,7 +119,7 @@ const HistoryListing = ({ setOrder, order, setSkip, skip }: IHistoryListing) => 
           <div className='flex flex-col w-full overflow-y-auto'>
             <div className='inline-block min-w-full py-2 align-middle pr-4'>
               <div className='relative'>
-                <Historytable setDetail={setDetail} setOpen={setOpen}/>
+                <Historytable setDetail={setDetail} setOpen={setOpen} />
               </div>
             </div>
             <Pagination skip={skip} setSkip={setSkip} />

@@ -1,7 +1,7 @@
 import ProfilePicture from '../../assets/images/profile.png'
 import { ReactComponent as LogoutIcon } from '../../assets/icons/logout.svg'
 import { useAppDispatch } from '../../hooks/redux'
-import { setIsAuthenticated } from '../../redux/auth/authSlice'
+import { setIdentity_id, setIsAuthenticated } from '../../redux/auth/authSlice'
 
 const SideBarViewProfile = () => {
   const dispatch = useAppDispatch()
@@ -9,6 +9,7 @@ const SideBarViewProfile = () => {
   const handleLogOut = () => {
     localStorage.removeItem('_token')
     dispatch(setIsAuthenticated(false))
+    dispatch(setIdentity_id(null))
   }
   return (
     <div className='pl-2 pr-2 pb-9'>

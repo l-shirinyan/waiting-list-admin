@@ -3,7 +3,7 @@ import { Link, Navigate, useNavigate } from 'react-router-dom'
 
 import { ReactComponent as EyeIcon } from '../../assets/icons/eye.svg'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { setIsAuthenticated } from '../../redux/auth/authSlice'
+import { setIdentity_id, setIsAuthenticated } from '../../redux/auth/authSlice'
 import { IDetail } from '../../redux/model'
 import { useSignIn } from '../../redux/queries'
 
@@ -25,8 +25,10 @@ const SignIn = () => {
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      localStorage.setItem('_token', mutate.data as string)
+      localStorage.setItem('_token', mutate.data?.auth)
+      localStorage.setItem('identity_id', mutate.data?.identity_id)
       dispatch(setIsAuthenticated(true))
+      dispatch(setIdentity_id(mutate.data?.identity_id))
       navigate('/')
     }
     if (mutate.isError) {

@@ -32,7 +32,11 @@ const Reservation = () => {
             <span className='text-xl font-semibold leading-6 text-purple-300'>
               Seating View Area
             </span>
-            <div className={`${addNewArea?'max-w-[1030px] ':'max-w-[637px]'} flex justify-between flex-col gap-3 lg:items-end lg:flex-row lg:gap-0`}>
+            <div
+              className={`${
+                addNewArea ? 'max-w-[1030px] ' : 'max-w-[637px]'
+              } flex justify-between flex-col gap-3 lg:items-end lg:flex-row lg:gap-0`}
+            >
               <span className='text-light-purple text-base leading-5 font-semibold max-w-[400px]'>
                 Manage available areas, that could be selected by guests
               </span>
@@ -124,7 +128,8 @@ const Reservation = () => {
             Upload restaurant logo to present it in reservation page
           </span>
         </div>
-        <div className='flex justify-center items-center rounded-[50%] h-[115px] w-[115px] bg-grey-150 self-center'>
+        <div className='flex justify-center items-center rounded-[50%] h-[115px] w-[115px] bg-grey-150 self-center relative'>
+          <input type='file' id='avatar' name='avatar' accept='image/png, image/jpeg' className='opacity-0 w-full h-full absolute'/>
           <BackUpIcon />
         </div>
       </div>

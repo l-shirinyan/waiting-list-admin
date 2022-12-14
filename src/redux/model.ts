@@ -4,9 +4,10 @@ export type ErrorResponseSignUp = {
 
 export type SuccessResponse = {
   id: string
+  identity_id: string
+  auth: string
 }
 
 export interface IDetail {
   msg: string
 }
-

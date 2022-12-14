@@ -13,17 +13,11 @@ const CurrentQueueListing = () => {
   const [open, setOpen] = useState(false)
   const [order, setOrder] = useState('asc')
   const [searchTerm, setSearchTerm] = useState('')
-  const { data, isSuccess, isLoading } = useFetch(
-    process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`,
-    'queueKey',
-  )
+  const { data, isSuccess, isLoading } = useFetch(`/today/?sort=${order}`, 'queueKey')
   const { queueData } = useAppSelector((state) => state.queueData)
   const { mutate } = getQueue()
   const dispatch = useAppDispatch()
-  const { mutate: request } = currentQueue(
-    'https://yqrc-api-queue.gaytomycode.com/v1/waitinglist',
-    'patch',
-  )
+  const { mutate: request } = currentQueue('patch')
   let searchData: IData[] | null
   if (!isLoading && queueData?.length) {
     searchData = [...queueData]
@@ -42,7 +36,7 @@ const CurrentQueueListing = () => {
 
   useEffect(() => {
     if (request.isSuccess) {
-      mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+      mutate.mutate(`/today/?sort=${order}`)
     }
   }, [request.isSuccess])
 
@@ -56,16 +50,16 @@ const CurrentQueueListing = () => {
           )
           dispatch(currentQueueData(searched))
         } else {
-          mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+          mutate.mutate(`/today/?sort=${order}`)
         }
       }
     }, 1000)
     return () => clearTimeout(delayDebounceFn)
   }, [searchTerm])
 
-  const handleSortBy = (order: string) => {
-    setOrder(order)
-    mutate.mutate(process.env.REACT_APP_QUEUE_URL + `/today/?sort=${order}`)
+  const handleSortBy = (type: string) => {
+    setOrder(type)
+    mutate.mutate(`/today/?sort=${type}`)
   }
 
   const handleChangeStatus = (status: string) => {

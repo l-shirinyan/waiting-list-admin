@@ -5,7 +5,7 @@ import 'react-phone-number-input/style.css'
 import { TelInput } from '../Input/PhoneInput'
 import { useSignUp } from '../../redux/queries'
 import { useAppDispatch, useAppSelector } from '../../hooks/redux'
-import { setIsAuthenticated } from '../../redux/auth/authSlice'
+import { setIdentity_id, setIsAuthenticated } from '../../redux/auth/authSlice'
 import { IDetail } from '../../redux/model'
 
 const SignUp = () => {
@@ -27,8 +27,10 @@ const SignUp = () => {
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      localStorage.setItem('_token', mutate.data as string)
+      localStorage.setItem('_token', mutate.data?.auth)
+      localStorage.setItem('identity_id', mutate.data?.identity_id)
       dispatch(setIsAuthenticated(true))
+      setIdentity_id(setIdentity_id(mutate.data?.identity_id))
       navigate('/')
     }
     if (mutate.isError) {

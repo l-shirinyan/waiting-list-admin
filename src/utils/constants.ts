@@ -142,3 +142,6 @@ export const publishingOptions: IPublishingOptions[] = [
     current: false,
   },
 ]
+
+export const BASE_URL = process.env.REACT_APP_BASE_URL
+export const IDENTITY_URL = process.env.REACT_APP_IDENTITY_URL

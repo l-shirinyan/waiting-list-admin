@@ -11,7 +11,10 @@ const queueSlice = createSlice({
     currentQueueData: (state, action) => {
       state.queueData = action.payload
     },
+    addNewQueue: (state, action) => {
+      state.queueData = state.queueData && [...state.queueData, action.payload]
+    },
   },
 })
-export const { currentQueueData } = queueSlice.actions
+export const { currentQueueData, addNewQueue } = queueSlice.actions
 export default queueSlice.reducer
