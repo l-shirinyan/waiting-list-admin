@@ -7,22 +7,15 @@ import { SettingsSeat } from './SettingsSeat'
 import { Limitations } from './Limitations'
 import { BASE_URL, TERMS_URL, RESTURANT_URL } from '../../utils/constants'
 
-interface IReservation {
-  termsData: { id: number }
-}
-
-const Reservation = ({ termsData }: IReservation) => {
-  const { terms_identity } = useAppSelector((state) => state.isAuth)
+const Reservation = () => {
+  const { identity_id } = useAppSelector((state) => state.isAuth)
   const {
     data: limitData,
     isError: limitError,
     isSuccess: limitSuccess,
   } = useFetch('/v1/limitations/', 'limitKey')
-  const { data, isLoading, isSuccess } = getTerms(
-    `?identity_id=${terms_identity || (termsData && termsData.id)}`,
-    'get',
-    'termsKey',
-  )
+
+  const { data, isLoading, isSuccess } = getTerms(`?identity_id=${identity_id}`, 'get', 'termsKey')
   const [terms, setTerms] = useState(false)
   const [fileInput, setFileInput] = useState<File>()
 
