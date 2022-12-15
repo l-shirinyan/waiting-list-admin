@@ -7,7 +7,7 @@ const SideBarViewProfile = () => {
   const dispatch = useAppDispatch()
 
   const handleLogOut = () => {
-    localStorage.removeItem('_token')
+    localStorage.removeItem('user')
     dispatch(setIsAuthenticated(false))
     dispatch(setIdentity_id(null))
   }

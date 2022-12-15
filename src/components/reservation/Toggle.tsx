@@ -1,14 +1,22 @@
 import { Switch } from '@headlessui/react'
+
+interface IEl {
+  id: number
+  is_active: boolean
+}
+
 interface IToggle {
   enabled: boolean
-  setEnabled: (enabled: boolean) => void
+  setEnabled: (enabled?: boolean, id?: number) => void
+  el?: IEl
 }
-const Toggle = ({ enabled, setEnabled }: IToggle) => {
+
+const Toggle = ({ enabled, setEnabled, el }: IToggle) => {
   return (
     <Switch.Group as='div' className='flex items-center justify-between'>
       <Switch
         checked={enabled}
-        onChange={setEnabled}
+        onChange={el ? () => setEnabled(el.is_active, el.id) : setEnabled}
         className={`${
           enabled ? 'bg-indigo-600' : 'bg-gray-200'
         } relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2`}

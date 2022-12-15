@@ -10,7 +10,8 @@ export default defineConfig({
       REACT_APP_BASE_URL: 'https://yqrc-api-queue.gaytomycode.com',
       REACT_APP_IDENTITY_URL: 'https://yqrc-api-identity.gaytomycode.com',
       REACT_APP_TERMS_URL: 'https://yqrc-api-terms.gaytomycode.com/v1/waitinglist/',
-      REACT_APP_SEAT_URL:'https://yqrc-api-seating.gaytomycode.com/v1/'
+      REACT_APP_SEAT_URL: 'https://yqrc-api-seating.gaytomycode.com/v1/',
+      REACT_APP_RESTURANT_URL: 'https://yqrc-api-resturant.gaytomycode.com/v1',
     },
   },
 })

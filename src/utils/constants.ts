@@ -147,3 +147,4 @@ export const BASE_URL = process.env.REACT_APP_BASE_URL
 export const IDENTITY_URL = process.env.REACT_APP_IDENTITY_URL
 export const TERMS_URL = process.env.REACT_APP_TERMS_URL
 export const SEAT_URL = process.env.REACT_APP_SEAT_URL
+export const RESTURANT_URL = process.env.REACT_APP_RESTURANT_URL

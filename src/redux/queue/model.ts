@@ -15,7 +15,7 @@ export interface IData {
   status: string
 }
 
-interface ISeat {
+export interface ISeat {
   name: string
   identity_id: number
   id: number

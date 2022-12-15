@@ -1,6 +1,6 @@
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { apiRequest } from '../configs/requests'
-import { IDENTITY_URL, SEAT_URL, TERMS_URL } from '../utils/constants'
+import { IDENTITY_URL, RESTURANT_URL, SEAT_URL, TERMS_URL } from '../utils/constants'
 import { ErrorResponseSignUp, SuccessResponse } from './model'
 
 const headers = {
@@ -18,10 +18,10 @@ export const register = async (body: { sign: object; resturant: object }) => {
       ...headers,
       Authorization: sign.auth,
     },
-    'https://yqrc-api-resturant.gaytomycode.com/v1/',
+    RESTURANT_URL,
+    true,
   )
-
-  await apiRequest(
+  const { id } = await apiRequest(
     '',
     'post',
     {
@@ -32,8 +32,9 @@ export const register = async (body: { sign: object; resturant: object }) => {
       Authorization: sign.auth,
     },
     TERMS_URL,
+    true,
   )
-  return sign
+  return { ...sign, terms_identity: id }
 }
 
 export const login = async (body: object) => {
@@ -82,11 +83,7 @@ export function useSignUp(body: object) {
 export function useFetch(url: string, queryKey: string) {
   return useQuery({
     queryKey: [queryKey],
-    queryFn: () =>
-      apiRequest(url, 'get', undefined, {
-        ...headers,
-        Authorization: localStorage.getItem('_token'),
-      }),
+    queryFn: () => apiRequest(url, 'get', undefined, headers),
     retry: false,
   })
 }
@@ -95,10 +92,7 @@ export function getQueue(method = 'get') {
   return {
     mutate: useMutation({
       mutationFn: (url?: string, body?: object) =>
-        apiRequest('/v1/waitinglist' + url, method, body, {
-          ...headers,
-          Authorization: localStorage.getItem('_token'),
-        }),
+        apiRequest('/v1/waitinglist' + url, method, body, headers),
     }),
   }
 }
@@ -106,11 +100,7 @@ export function getQueue(method = 'get') {
 export function currentQueue(method = 'get') {
   return {
     mutate: useMutation({
-      mutationFn: (body?: object) =>
-        apiRequest('/v1/waitinglist', method, body, {
-          ...headers,
-          Authorization: localStorage.getItem('_token'),
-        }),
+      mutationFn: (body?: object) => apiRequest('/v1/waitinglist', method, body, headers),
     }),
   }
 }
@@ -119,62 +109,44 @@ export function updateQueue(method = 'get') {
   return {
     mutate: useMutation({
       mutationFn: (body?: { url: string; id: number; status: string }) =>
-        apiRequest('/v1/waitinglist' + body?.url, method, body, {
-          ...headers,
-          Authorization: localStorage.getItem('_token'),
-        }),
+        apiRequest('/v1/waitinglist' + body?.url, method, body, headers),
     }),
   }
 }
 
-export function updateDetail(url: string, method = 'patch') {
+export function updateDetail(
+  url: string,
+  method = 'patch',
+  onSuccess?: () => void,
+  type = 'application/json',
+) {
   return {
     mutate: useMutation({
       mutationFn: (body?: object) =>
-        apiRequest(
-          '',
-          method,
-          body,
-          {
-            ...headers,
-            Authorization: localStorage.getItem('_token'),
-          },
-          url,
-        ),
+        apiRequest('', method, body, { ...headers, 'Content-type': type }, url),
+      onSuccess,
     }),
   }
 }
 
-export function getSeatAreas(uri?: string, method = 'get', queryKey?: string) {
+export function getSeatAreas(
+  uri?: string,
+  method = 'get',
+  queryKey?: string,
+  onSuccess?: () => void,
+) {
   return useQuery({
     queryKey: [queryKey],
-    queryFn: (body?: object) =>
-      apiRequest(
-        uri,
-        method,
-        body,
-        {
-          ...headers,
-          Authorization: localStorage.getItem('_token'),
-        },
-        SEAT_URL,
-      ),
+    queryFn: (body?: object) => apiRequest(uri, method, body, headers, SEAT_URL),
+    onSuccess,
   })
 }
 
-export function getTerms(uri?: string, method = 'get', queryKey?: string) {
+export function getTerms(uri?: string, method = 'get', queryKey?: string, onSuccess?: () => void) {
   return useQuery({
     queryKey: [queryKey],
-    queryFn: (body?: object) =>
-      apiRequest(
-        uri,
-        method,
-        body,
-        {
-          ...headers,
-          Authorization: localStorage.getItem('_token'),
-        },
-        TERMS_URL,
-      ),
+    queryFn: (body?: object) => apiRequest(uri, method, body, headers, TERMS_URL),
+    onSuccess,
+    retry: false,
   })
 }

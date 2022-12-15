@@ -25,8 +25,14 @@ const SignIn = () => {
 
   useEffect(() => {
     if (mutate.isSuccess) {
-      localStorage.setItem('_token', mutate.data?.auth)
-      localStorage.setItem('identity_id', mutate.data?.identity_id)
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          _token: mutate.data?.auth,
+          identity_id: mutate.data?.identity_id,
+          terms_identity: null,
+        }),
+      )
       dispatch(setIsAuthenticated(true))
       dispatch(setIdentity_id(mutate.data?.identity_id))
       navigate('/')

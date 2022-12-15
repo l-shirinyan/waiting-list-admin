@@ -61,6 +61,7 @@ module.exports = {
         'purple-100': '#9A99CA',
         'purple-50': '#BDBDCF',
         'green-900': '#374151',
+        green: ' #00FF00',
       },
     },
   },
